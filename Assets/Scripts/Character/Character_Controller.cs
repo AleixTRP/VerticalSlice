@@ -8,12 +8,11 @@ public class Character_Controller : MonoBehaviour
 {
     private CharacterController controller;
     private Vector3 finalVelocity = Vector3.zero;
-    private float gravity = 20f;
+
 
     [SerializeField]
     private float velocityXZ = 5f;
 
-    private float coyoteTime;
     private Vector3 movementInput = Vector3.zero;
 
     [SerializeField]

@@ -32,7 +32,7 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        Vector2 inputVector = InputManager._INPUT_MANAGER.GetLeftAxisValue();
+        Vector2 inputVector = Input_Manager._INPUT_MANAGER.GetLeftAxisValue();
         movementInput = new Vector3(inputVector.x, 0f, inputVector.y);
         movementInput.Normalize();
         

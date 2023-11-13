@@ -16,6 +16,8 @@ public class Input_Manager : MonoBehaviour
 
     private float buttonPlant = 0f;
 
+    private float buttonCut = 0f;
+
     
 
 
@@ -32,6 +34,7 @@ public class Input_Manager : MonoBehaviour
             playerInputs.Character.Move.performed += LeftAxisUpdate;
             playerInputs.Character.Camera.performed += CameraMovement;
             playerInputs.Character.Grow.performed += GrowButtonPlant;
+            playerInputs.Character.Cut.performed += CutButtonAction;
         
             _INPUT_MANAGER = this;
             DontDestroyOnLoad(this);
@@ -42,6 +45,8 @@ public class Input_Manager : MonoBehaviour
     {
 
         buttonPlant += Time.deltaTime;
+
+        buttonCut += Time.deltaTime;
 
         InputSystem.Update();
 
@@ -74,6 +79,19 @@ public class Input_Manager : MonoBehaviour
     {
         return this.buttonPlant == 0f;
     }
+    //Button
+    private void CutButtonAction(InputAction.CallbackContext context)
+    {
+
+        buttonCut = 0f;
+    }
+
+    //Button
+    public bool GetButtonCut()
+    {
+        return this.buttonCut == 0f;
+    }
+
 
     //Vector2
     private void CameraMovement(InputAction.CallbackContext context)

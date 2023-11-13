@@ -53,6 +53,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cut"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""7d2b25fc-e996-47ca-909b-31aa7baaf214"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -147,11 +156,22 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fa56f91b-9aba-4bc7-9dcd-5b605e56ec9b"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Grow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6f5d0e6-29ff-4a14-9839-55b7e2346d67"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cut"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -165,6 +185,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Character_Move = m_Character.FindAction("Move", throwIfNotFound: true);
         m_Character_Camera = m_Character.FindAction("Camera", throwIfNotFound: true);
         m_Character_Grow = m_Character.FindAction("Grow", throwIfNotFound: true);
+        m_Character_Cut = m_Character.FindAction("Cut", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +250,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Move;
     private readonly InputAction m_Character_Camera;
     private readonly InputAction m_Character_Grow;
+    private readonly InputAction m_Character_Cut;
     public struct CharacterActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -236,6 +258,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Character_Move;
         public InputAction @Camera => m_Wrapper.m_Character_Camera;
         public InputAction @Grow => m_Wrapper.m_Character_Grow;
+        public InputAction @Cut => m_Wrapper.m_Character_Cut;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -254,6 +277,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Grow.started += instance.OnGrow;
             @Grow.performed += instance.OnGrow;
             @Grow.canceled += instance.OnGrow;
+            @Cut.started += instance.OnCut;
+            @Cut.performed += instance.OnCut;
+            @Cut.canceled += instance.OnCut;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -267,6 +293,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Grow.started -= instance.OnGrow;
             @Grow.performed -= instance.OnGrow;
             @Grow.canceled -= instance.OnGrow;
+            @Cut.started -= instance.OnCut;
+            @Cut.performed -= instance.OnCut;
+            @Cut.canceled -= instance.OnCut;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -289,5 +318,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
         void OnGrow(InputAction.CallbackContext context);
+        void OnCut(InputAction.CallbackContext context);
     }
 }

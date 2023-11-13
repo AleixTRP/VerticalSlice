@@ -1,64 +1,62 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GrowPlants : MonoBehaviour
 {
-    public GameObject treePrefab;
-    public Transform potTransform;
-    public float growthPerSecond = 0.1f;
-    public float maxSize = 1.0f;
-    public float growthTime = 5.0f; // Time in seconds before reaching maximum size
-    public Color finalColor = Color.green; // Color to be applied when the tree reaches its maximum size
+    public GameObject treePrefab;  // Assign the tree 3D model in the Inspector.
+    public float growthTime = 10f;
 
-    private GameObject currentTree;
-    private float elapsedTime;
+    private bool nearFlowerpot = false;
+    private GameObject nearestFlowerpot; // Reference to the nearest flowerpot object.
 
     void Update()
     {
-        elapsedTime += Time.deltaTime;
-
-        if (elapsedTime >= growthTime)
+        if (nearFlowerpot && Input_Manager._INPUT_MANAGER.GetButtonPlant())
         {
-            if (currentTree != null && currentTree.transform.localScale.x < maxSize)
-            {
-                GrowTree();
-            }
-            else
-            {
-                ChangeTreeColor();
-            }
-        }
-
-        if (Input_Manager._INPUT_MANAGER.GetButtonPlant())
-        {
-            PlantTree();
+            Plant();
         }
     }
 
-    void PlantTree()
+    void OnTriggerEnter(Collider other)
     {
-        if (currentTree == null)
+        if (other.CompareTag("Maceta"))
         {
-            currentTree = Instantiate(treePrefab, potTransform.position, Quaternion.identity);
-            currentTree.transform.parent = potTransform;
-            elapsedTime = 0f; // Reset the timer when planting a new tree
+            nearFlowerpot = true;
+            nearestFlowerpot = other.gameObject;
         }
     }
 
-    void GrowTree()
+    void OnTriggerExit(Collider other)
     {
-        currentTree.transform.localScale += new Vector3(growthPerSecond * Time.deltaTime,
-                                                        growthPerSecond * Time.deltaTime,
-                                                        growthPerSecond * Time.deltaTime);
+        if (other.CompareTag("Maceta"))
+        {
+            nearFlowerpot = false;
+            nearestFlowerpot = null;
+        }
     }
 
-    void ChangeTreeColor()
+    void Plant()
     {
-        Renderer treeRenderer = currentTree.GetComponent<Renderer>();
-        if (treeRenderer != null)
+        if (nearestFlowerpot != null)
         {
-            treeRenderer.material.color = finalColor;
+            // Instantiate the tree at the nearest flowerpot's position.
+            GameObject newTree = Instantiate(treePrefab, nearestFlowerpot.transform.position, Quaternion.identity);
+            StartCoroutine(GrowTree(newTree));
+        }
+    }
+
+    IEnumerator GrowTree(GameObject tree)
+    {
+        float timeElapsed = 0f;
+
+        while (timeElapsed < growthTime)
+        {
+            timeElapsed += Time.deltaTime;
+            tree.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timeElapsed / growthTime);
+            yield return null;
         }
     }
 }
