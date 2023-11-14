@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class GrowPlants : MonoBehaviour
 {
-    public GameObject treePrefab;  // Assign the tree 3D model in the Inspector.
-    public float growthTime = 10f;
+    [SerializeField]
+    private float growthTime = 10f;
 
     private bool nearFlowerpot = false;
-    private GameObject nearestFlowerpot; // Reference to the nearest flowerpot object.
+    private GameObject nearestFlowerpot;
 
     void Update()
     {
@@ -42,12 +42,38 @@ public class GrowPlants : MonoBehaviour
     {
         if (nearestFlowerpot != null)
         {
-            // Instantiate the tree at the nearest flowerpot's position.
-            GameObject newTree = Instantiate(treePrefab, nearestFlowerpot.transform.position, Quaternion.identity);
-            StartCoroutine(GrowTree(newTree));
+            Inventory playerInventory = GetComponent<Inventory>();
+
+            if (playerInventory != null && playerInventory.InventoryCount > 0)
+            {
+                // Obtén el primer árbol del inventario
+                GameObject treeFromInventory = playerInventory.GetFirstTreeFromInventory();
+
+                if (treeFromInventory != null)
+                {
+                    // Mueve el árbol del inventario a la posición de la maceta y activa su GameObject
+                    treeFromInventory.transform.position = nearestFlowerpot.transform.position;
+                    treeFromInventory.SetActive(true);
+
+                    // Desactiva el árbol como trigger
+                    Collider treeCollider = treeFromInventory.GetComponent<Collider>();
+                    if (treeCollider != null)
+                    {
+                        treeCollider.isTrigger = false;
+                    }
+
+                    // Quitar el tag del árbol
+                    treeFromInventory.tag = "Untagged";
+
+                    // Inicia la corutina de crecimiento para este árbol específico
+                    StartCoroutine(GrowTree(treeFromInventory));
+
+                    // Elimina el árbol del inventario (puedes hacerlo después de que haya crecido)
+                    playerInventory.RemoveFromInventory(treeFromInventory);
+                }
+            }
         }
     }
-
     IEnumerator GrowTree(GameObject tree)
     {
         float timeElapsed = 0f;
