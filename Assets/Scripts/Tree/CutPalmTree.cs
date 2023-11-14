@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CutPalmTree : MonoBehaviour
 {
@@ -20,6 +20,7 @@ public class CutPalmTree : MonoBehaviour
     private void Start()
     {
         gm = transform.parent.gameObject;
+       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,6 +34,7 @@ public class CutPalmTree : MonoBehaviour
         {
             // El jugador pasó por encima del árbol pequeño, agregar al inventario y destruirlo
             playerInventory = other.GetComponent<Inventory>();
+           
             if (playerInventory != null)
             {
                 playerInventory.AddToInventory(other.gameObject);
@@ -69,7 +71,10 @@ public class CutPalmTree : MonoBehaviour
                 {
                     // Instanciar el árbol pequeño en la escena
                     GameObject smallTreeInstance = Instantiate(smallTreePrefab, gm.transform.position, gm.transform.rotation);
+                    
+                  
                 }
+                
 
                 // Destruir el objeto padre (árbol completo)
                 Destroy(gm);

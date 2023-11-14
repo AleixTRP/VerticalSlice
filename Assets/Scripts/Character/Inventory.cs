@@ -14,6 +14,14 @@ public class Inventory : MonoBehaviour
         get { return inventory.Count; }
     }
 
+
+    public static Inventory Instance;
+
+    private void Awake()
+    {
+        // Configurar la referencia estática al inventario
+        Instance = this;
+    }
     public void AddToInventory(GameObject item)
     {
         if (!IsInventoryFull)
@@ -60,10 +68,10 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            return null; 
+            return null;
         }
     }
-
+    
     public void RemoveFromInventory(GameObject item)
     {
         inventory.Remove(item);

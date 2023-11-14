@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2236630246309262703}
   - component: {fileID: 4433062154806073272}
   - component: {fileID: 3634217448317738120}
+  - component: {fileID: 4954940460867197234}
   m_Layer: 2
   m_Name: Fir_Tree
   m_TagString: Untagged
@@ -42,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3406295684188647585}
-  m_Mesh: {fileID: 4300000, guid: d7ad634caa1c049d49b730cc6d29c683, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e3d54c8d2447c9f4b9ad5d2021da4b42, type: 3}
 --- !u!23 &4433062154806073272
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -104,8 +105,28 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.8737793, y: 1.7686094, z: 3.710205}
-  m_Center: {x: -0.05609131, y: 0.8843872, z: 0.011526167}
+  m_Size: {x: 2.6176758, y: 2.902063, z: 2.795044}
+  m_Center: {x: 0.07196045, y: 1.4511139, z: 0.06758696}
+--- !u!114 &4954940460867197234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3406295684188647585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d641e22c7097a7c43a233c3f02088be4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 3
+  gm: {fileID: 3406295684188647585}
+  smallTreePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
+  spawnplants:
+  - {fileID: 2594766243793620232, guid: 4d1f930728eb81f499eefd1f6d4db221, type: 3}
+  - {fileID: 3759753885466561612, guid: 430aea17f65ddba419bf9f426b17128f, type: 3}
+  - {fileID: 6662174415517180126, guid: 81dad7d5552c9a341b390c79338fe0a4, type: 3}
+  - {fileID: 6352184942146035110, guid: 47ded181e73460047bae5118c0254d3e, type: 3}
 --- !u!1 &8572944747119746252
 GameObject:
   m_ObjectHideFlags: 0

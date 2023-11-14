@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,12 +11,28 @@ public class GrowPlants : MonoBehaviour
     private float growthTime = 10f;
 
     private bool nearFlowerpot = false;
+
+    private Vector3 plantSpawn = Vector3.zero;
+
     private GameObject nearestFlowerpot;
 
+    [SerializeField]
+    private int WinPlants;
+
+
+    [SerializeField]
+    private GameObject[] spawnplants;
+
+
+    private void Start()
+    {
+     
+    }
     void Update()
     {
         if (nearFlowerpot && Input_Manager._INPUT_MANAGER.GetButtonPlant())
         {
+            WinPlants++;
             Plant();
         }
     }
@@ -42,34 +59,47 @@ public class GrowPlants : MonoBehaviour
     {
         if (nearestFlowerpot != null)
         {
-            Inventory playerInventory = GetComponent<Inventory>();
+           
+                Debug.Log("Win");
+                Inventory playerInventory = GetComponent<Inventory>();
 
-            if (playerInventory != null && playerInventory.InventoryCount > 0)
-            {
-                // Obtén el primer árbol del inventario
-                GameObject treeFromInventory = playerInventory.GetFirstTreeFromInventory();
-
-                if (treeFromInventory != null)
+                if (playerInventory != null && playerInventory.InventoryCount > 0)
                 {
-                    // Mueve el árbol del inventario a la posición de la maceta y activa su GameObject
-                    treeFromInventory.transform.position = nearestFlowerpot.transform.position;
-                    treeFromInventory.SetActive(true);
+                    // Obtén el primer árbol del inventario
+                    GameObject treeFromInventory = playerInventory.GetFirstTreeFromInventory();
 
-                    // Desactiva el árbol como trigger
-                    Collider treeCollider = treeFromInventory.GetComponent<Collider>();
-                    if (treeCollider != null)
+                    if (treeFromInventory != null)
                     {
-                        treeCollider.isTrigger = false;
+                        // Mueve el árbol del inventario a la posición de la maceta y activa su GameObject
+                        treeFromInventory.transform.position = nearestFlowerpot.transform.position;
+                        treeFromInventory.SetActive(true);
+
+                        // Desactiva el árbol como trigger
+                        Collider treeCollider = treeFromInventory.GetComponent<Collider>();
+                        if (treeCollider != null)
+                        {
+                            treeCollider.isTrigger = false;
+                        }
+
+                        // Quitar el tag del árbol
+                        treeFromInventory.tag = "Untagged";
+
+                        // Inicia la corutina de crecimiento para este árbol específico
+                        StartCoroutine(GrowTree(treeFromInventory));
+
+                        for (int i = 0; i < spawnplants.Length; i++)
+                        {
+                            plantSpawn = new Vector3(Random.Range(4f, -2f), 0f, Random.Range(4f, -2f));
+                            Instantiate(spawnplants[i], nearestFlowerpot.transform.position + plantSpawn, Quaternion.identity);
+
+                        }
+
+                        // Elimina el árbol del inventario 
+                        playerInventory.RemoveFromInventory(treeFromInventory);
+                    if (WinPlants == 3)
+                    {
+                        Debug.LogError("Win");
                     }
-
-                    // Quitar el tag del árbol
-                    treeFromInventory.tag = "Untagged";
-
-                    // Inicia la corutina de crecimiento para este árbol específico
-                    StartCoroutine(GrowTree(treeFromInventory));
-
-                    // Elimina el árbol del inventario (puedes hacerlo después de que haya crecido)
-                    playerInventory.RemoveFromInventory(treeFromInventory);
                 }
             }
         }

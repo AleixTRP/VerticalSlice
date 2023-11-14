@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class CutPineTree : MonoBehaviour
 {
@@ -17,9 +18,17 @@ public class CutPineTree : MonoBehaviour
 
     private Inventory playerInventory;
 
+    [SerializeField]
+    List<GameObject> smallPlants;
+
+
+
+
     private void Start()
     {
         gm = transform.parent.gameObject;
+
+     
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,6 +44,7 @@ public class CutPineTree : MonoBehaviour
             playerInventory = other.GetComponent<Inventory>();
             if (playerInventory != null)
             {
+                
                 playerInventory.AddToInventory(other.gameObject);
             }
 
@@ -69,7 +79,10 @@ public class CutPineTree : MonoBehaviour
                 {
                     // Instanciar el árbol pequeño en la escena
                     GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
+
+                    
                 }
+
 
                 // Destruir el objeto padre (árbol completo)
                 Destroy(gm);

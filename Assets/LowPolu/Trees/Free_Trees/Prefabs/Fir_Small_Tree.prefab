@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2377290}
   - component: {fileID: 2433840224594435085}
   - component: {fileID: 4973227578000486721}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fir_Small_Tree
   m_TagString: SmallPine
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 192044}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: de90377eb0ab57145a892946012d826c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

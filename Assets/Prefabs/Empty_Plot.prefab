@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 613451300910222678}
   m_Layer: 2
   m_Name: Empty_Plot
-  m_TagString: Untagged
+  m_TagString: Maceta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   - {fileID: 3564497390687244311}
   - {fileID: 3906853284468668775}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3906853284468794343
 PrefabInstance:
@@ -48,6 +48,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: ff53e1a687da3e94aad8ba03f54ffac9, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ff53e1a687da3e94aad8ba03f54ffac9, type: 3}
+      propertyPath: m_TagString
+      value: Maceta
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ff53e1a687da3e94aad8ba03f54ffac9, type: 3}
       propertyPath: m_RootOrder
