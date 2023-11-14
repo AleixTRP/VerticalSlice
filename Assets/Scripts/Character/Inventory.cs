@@ -77,5 +77,12 @@ public class Inventory : MonoBehaviour
             // Agrega el objeto al inventario cuando el jugador pasa por encima
             AddToInventory(other.gameObject);
         }
+
+        // Verifica si el objeto en el suelo es interactuable y si el inventario no está lleno
+        if (other.CompareTag("SmallPine") && !IsInventoryFull)
+        {
+            // Agrega el objeto al inventario cuando el jugador pasa por encima
+            AddToInventory(other.gameObject);
+        }
     }
 }

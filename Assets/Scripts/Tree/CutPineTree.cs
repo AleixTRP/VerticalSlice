@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CutTree : MonoBehaviour
+public class CutPineTree : MonoBehaviour
 {
     private bool canHit;
 
@@ -13,7 +13,7 @@ public class CutTree : MonoBehaviour
     private GameObject gm;
 
     [SerializeField]
-    private GameObject smallTreePrefab;
+    private GameObject smallPinePrefab;
 
     private Inventory playerInventory;
 
@@ -29,7 +29,7 @@ public class CutTree : MonoBehaviour
             Debug.Log("Entra");
             canHit = true;
         }
-        else if (other.gameObject.CompareTag("SmallTree") && canHit)
+        else if (other.gameObject.CompareTag("SmallPine") && canHit)
         {
             // El jugador pasó por encima del árbol pequeño, agregar al inventario y destruirlo
             playerInventory = other.GetComponent<Inventory>();
@@ -64,11 +64,11 @@ public class CutTree : MonoBehaviour
             {
                 Debug.Log("Destruir");
 
-                // Generar un árbol pequeño con un 50% de probabilidad
-                if (Random.value < 0.5f && smallTreePrefab != null)
+                // Generar un árbol pequeño con un 70% de probabilidad
+                if (Random.value < 0.7f && smallPinePrefab != null)
                 {
                     // Instanciar el árbol pequeño en la escena
-                    GameObject smallTreeInstance = Instantiate(smallTreePrefab, gm.transform.position, gm.transform.rotation);
+                    GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
                 }
 
                 // Destruir el objeto padre (árbol completo)
