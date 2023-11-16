@@ -9,15 +9,18 @@ public class Map_Matrix : MonoBehaviour
     
     private int columnas = 100;
 
-    [SerializeField]
-    private Terrain terreno;
+    private int subdivisionesEnFilas = 2;
+    private int subdivisionesEnColumnas = 2;
+
+   
+    public Terrain terreno;
    
     [SerializeField]
     private Transform jugador; 
 
     private bool[,] cuadrantesReplantados;
 
-    private Vector3 posicionAnteriorJugador; 
+    private Vector3 posicionAnteriorJugador;
 
     void Start()
     {
@@ -30,39 +33,61 @@ public class Map_Matrix : MonoBehaviour
         InicializarMatrizCuadrantes();
         DividirTerrenoEnCuadrantes();
 
-       
-        posicionAnteriorJugador = jugador.position;
+        // Inicializa la posición anterior del jugador al inicio
+        posicionAnteriorJugador = ObtenerPosicionCuadrante(jugador.position);
     }
 
     void Update()
     {
-        // Verifica cambios en el cuadrante cada vez que la posición del jugador cambia
-        if (jugador.position != posicionAnteriorJugador)
+        Vector3 nuevaPosicion = ObtenerPosicionCuadrante(jugador.position);
+
+        if (nuevaPosicion != posicionAnteriorJugador)
         {
-            VerificarCambioCuadrante();
-            // Actualiza la posición anterior del jugador
-            posicionAnteriorJugador = jugador.position;
+            VerificarCambioCuadrante(nuevaPosicion);
+            posicionAnteriorJugador = nuevaPosicion;
         }
     }
 
-    void VerificarCambioCuadrante()
-    {
-        // Calcula las coordenadas del cuadrante actual del jugador
-        int filaActual = Mathf.FloorToInt(jugador.position.z / terreno.terrainData.size.z * filas);
-        int columnaActual = Mathf.FloorToInt(jugador.position.x / terreno.terrainData.size.x * columnas);
-
-
-
-        // Muestra un mensaje de debug si el jugador cambia de cuadrante
-        Debug.Log("El jugador ha cambiado de cuadrante. Fila: " + filaActual + ", Columna: " + columnaActual);
-    }
     void InicializarMatrizCuadrantes()
     {
-        cuadrantesReplantados = new bool[filas, columnas];
-       
+        cuadrantesReplantados = new bool[filas * subdivisionesEnFilas, columnas * subdivisionesEnColumnas];
+        
     }
 
     void DividirTerrenoEnCuadrantes()
+    {
+        float tamanoX = terreno.terrainData.size.x;
+        float tamanoZ = terreno.terrainData.size.z;
+
+        float tamanoCuadranteX = tamanoX / (columnas * subdivisionesEnColumnas);
+        float tamanoCuadranteZ = tamanoZ / (filas * subdivisionesEnFilas);
+
+        for (int fila = 0; fila < filas * subdivisionesEnFilas; fila++)
+        {
+            for (int columna = 0; columna < columnas * subdivisionesEnColumnas; columna++)
+            {
+                cuadrantesReplantados[fila, columna] = false; // Inicializa todos los cuadrantes como no replantados
+            }
+        }
+    }
+
+    void VerificarCambioCuadrante(Vector3 nuevaPosicion)
+    {
+        int filaActual = Mathf.FloorToInt(nuevaPosicion.z);
+        int columnaActual = Mathf.FloorToInt(nuevaPosicion.x);
+
+        Debug.Log("El jugador ha cambiado de cuadrante. Fila: " + filaActual + ", Columna: " + columnaActual);
+    }
+
+   public Vector3 ObtenerPosicionCuadrante(Vector3 posicion)
+    {
+        float x = Mathf.Floor(posicion.x / terreno.terrainData.size.x * columnas * subdivisionesEnColumnas);
+        float z = Mathf.Floor(posicion.z / terreno.terrainData.size.z * filas * subdivisionesEnFilas);
+
+        return new Vector3(x, 0f, z);
+    }
+
+    public void ActualizarCuadrante(Vector3 posicion)
     {
         // Obtener el tamaño total del terreno
         float tamanoX = terreno.terrainData.size.x;
@@ -72,20 +97,12 @@ public class Map_Matrix : MonoBehaviour
         float tamanoCuadranteX = tamanoX / columnas;
         float tamanoCuadranteZ = tamanoZ / filas;
 
-        // Iterar a través de las filas y columnas para crear los cuadrantes
-        for (int fila = 0; fila < filas; fila++)
-        {
-            for (int columna = 0; columna < columnas; columna++)
-            {
-                // Calcular las coordenadas del cuadrante
-                float x = columna * tamanoCuadranteX;
-                float z = fila * tamanoCuadranteZ;
+        // Convierte las coordenadas del mundo a las coordenadas locales del objeto Map_Matrix
+        Vector3 posicionLocal = transform.InverseTransformPoint(posicion);
 
-                
-                cuadrantesReplantados[fila, columna] = true;
-            }
-        }
+        // Calcula la posición en términos de la matriz de cuadrantes
+        int fila = Mathf.FloorToInt(posicionLocal.z / tamanoCuadranteZ);
+        int columna = Mathf.FloorToInt(posicionLocal.x / tamanoCuadranteX);
 
-    
     }
 }

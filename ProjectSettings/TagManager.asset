@@ -9,6 +9,7 @@ TagManager:
   - RangoCharacter
   - SmallTree
   - SmallPine
+  - Matrix
   layers:
   - Default
   - TransparentFX

@@ -1957,6 +1957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   growthTime: 8
+  Map_Terrain: {fileID: 1965343977}
   WinPlants: 0
   spawnplants:
   - {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
@@ -3286,9 +3287,11 @@ GameObject:
   - component: {fileID: 1727932960}
   - component: {fileID: 1727932962}
   - component: {fileID: 1727932961}
-  m_Layer: 0
+  - component: {fileID: 1727932964}
+  - component: {fileID: 1727932963}
+  m_Layer: 2
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Matrix
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3301,7 +3304,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727932959}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -579.2188, y: -15, z: -439}
+  m_LocalPosition: {x: -579.2188, y: -1.8, z: -439}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3367,6 +3370,54 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!65 &1727932963
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727932959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1010.188, y: 117.40556, z: 1035.509}
+  m_Center: {x: 504.594, y: 58.20278, z: 515.2495}
+--- !u!54 &1727932964
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727932959}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1761648685 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8572944747119746252, guid: f839f4c37f32fb64897093094886453d, type: 3}
@@ -3589,10 +3640,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 593fb94d50cebfc42887e62a057c01fd, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2059772533}
+      addedObject: {fileID: 2059772534}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 593fb94d50cebfc42887e62a057c01fd, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2059772534}
+      addedObject: {fileID: 2059772537}
   m_SourcePrefab: {fileID: 100100000, guid: 593fb94d50cebfc42887e62a057c01fd, type: 3}
 --- !u!1 &1965343977 stripped
 GameObject:
@@ -3946,18 +3997,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 593fb94d50cebfc42887e62a057c01fd, type: 3}
   m_PrefabInstance: {fileID: 1965343976}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2059772533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1965343977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c63048ccdfece6340b6695380133bfdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2059772534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3971,6 +4010,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terreno: {fileID: 1727932962}
+  jugador: {fileID: 1010064944}
+--- !u!64 &2059772537
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965343977}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 593fb94d50cebfc42887e62a057c01fd, type: 3}
 --- !u!1001 &2137352539
 PrefabInstance:
   m_ObjectHideFlags: 0

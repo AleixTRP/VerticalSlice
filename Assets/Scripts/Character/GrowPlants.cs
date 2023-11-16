@@ -7,30 +7,25 @@ using UnityEngine;
 
 public class GrowPlants : MonoBehaviour
 {
-    [SerializeField]
-    private float growthTime = 10f;
-
-    private bool nearFlowerpot = false;
-
-    private Vector3 plantSpawn = Vector3.zero;
-
-    private GameObject nearestFlowerpot;
+    [SerializeField] private float growthTime = 10f;
+    private bool nearCuadrante = false;
+    private Map_Matrix mapMatrix; // Referencia al script Map_Matrix
 
     [SerializeField]
-    private int WinPlants;
+    private GameObject Map_Terrain;
 
+    [SerializeField] private int WinPlants;
+    [SerializeField] private GameObject[] spawnplants;
 
-    [SerializeField]
-    private GameObject[] spawnplants;
-
-
-    private void Start()
+    void Start()
     {
-     
+        // Obtén la referencia al script Map_Matrix
+        mapMatrix = FindObjectOfType<Map_Matrix>();
     }
+
     void Update()
     {
-        if (nearFlowerpot && Input_Manager._INPUT_MANAGER.GetButtonPlant())
+        if (nearCuadrante && Input_Manager._INPUT_MANAGER.GetButtonPlant())
         {
             WinPlants++;
             Plant();
@@ -39,77 +34,157 @@ public class GrowPlants : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Maceta"))
+        if (other.CompareTag("Matrix")) // Cambia a la etiqueta correspondiente
         {
-            nearFlowerpot = true;
-            nearestFlowerpot = other.gameObject;
+            nearCuadrante = true;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Maceta"))
+        if (other.CompareTag("Matrix")) // Cambia a la etiqueta correspondiente
         {
-            nearFlowerpot = false;
-            nearestFlowerpot = null;
+            nearCuadrante = false;
         }
     }
 
     void Plant()
     {
-        if (nearestFlowerpot != null)
+        if (nearCuadrante)
         {
-           
-                Debug.Log("Win");
-                Inventory playerInventory = GetComponent<Inventory>();
+            Inventory playerInventory = GetComponent<Inventory>();
 
-                if (playerInventory != null && playerInventory.InventoryCount > 0)
+            if (playerInventory != null && playerInventory.InventoryCount > 0)
+            {
+                GameObject treeFromInventory = playerInventory.GetFirstTreeFromInventory();
+
+                if (treeFromInventory != null)
                 {
-                    // Obtén el primer árbol del inventario
-                    GameObject treeFromInventory = playerInventory.GetFirstTreeFromInventory();
+                    Vector3 plantPosition = transform.position;
+                    mapMatrix.ActualizarCuadrante(plantPosition);
 
-                    if (treeFromInventory != null)
-                    {
-                        // Mueve el árbol del inventario a la posición de la maceta y activa su GameObject
-                        treeFromInventory.transform.position = nearestFlowerpot.transform.position;
-                        treeFromInventory.SetActive(true);
+                    // Ajusta la posición del árbol en función de las plantas pequeñas
+                    AdjustTreePosition(treeFromInventory, plantPosition);
 
-                        // Desactiva el árbol como trigger
-                        Collider treeCollider = treeFromInventory.GetComponent<Collider>();
-                        if (treeCollider != null)
-                        {
-                            treeCollider.isTrigger = false;
-                        }
+                    // Inicia la corutina de crecimiento para este árbol específico
+                    StartCoroutine(GrowTree(treeFromInventory));
 
-                        // Quitar el tag del árbol
-                        treeFromInventory.tag = "Untagged";
+                    // Elimina el árbol del inventario 
+                    playerInventory.RemoveFromInventory(treeFromInventory);
 
-                        // Inicia la corutina de crecimiento para este árbol específico
-                        StartCoroutine(GrowTree(treeFromInventory));
+                    // Obtiene el cuadrante después de plantar el árbol
+                    Vector3 cuadrante = mapMatrix.ObtenerPosicionCuadrante(treeFromInventory.transform.position);
+                    Debug.Log("Árbol y plantas instanciados en el cuadrante: " + cuadrante);
 
-                        for (int i = 0; i < spawnplants.Length; i++)
-                        {
-                            plantSpawn = new Vector3(Random.Range(4f, -2f), 0f, Random.Range(4f, -2f));
-                            Instantiate(spawnplants[i], nearestFlowerpot.transform.position + plantSpawn, Quaternion.identity);
-
-                        }
-
-                        // Elimina el árbol del inventario 
-                        playerInventory.RemoveFromInventory(treeFromInventory);
                     if (WinPlants == 3)
                     {
                         Debug.LogError("Win");
                     }
                 }
+                else
+                {
+                    Debug.LogWarning("No se pudo obtener el árbol del inventario.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Inventario no válido o sin árboles.");
             }
         }
     }
+
+    void AdjustTreePosition(GameObject tree, Vector3 plantPosition)
+    {
+        // Ajusta la posición del árbol en función de las plantas pequeñas
+        List<Vector3> plantPositions = GeneratePlantPositions(plantPosition);
+
+        Vector3 averagePlantPosition = CalculateAveragePlantPosition(plantPositions);
+
+        AdjustTreeHeight(tree, averagePlantPosition);
+    }
+
+    List<Vector3> GeneratePlantPositions(Vector3 plantPosition)
+    {
+        List<Vector3> plantPositions = new List<Vector3>();
+
+        for (int i = 0; i < spawnplants.Length; i++)
+        {
+            float angle = Random.Range(0f, 360f);
+            float radius = Random.Range(2f, 4f);
+
+            float plantSpawnX = (plantPosition.x + 1) + radius * Mathf.Cos(Mathf.Deg2Rad * angle);
+            float plantSpawnZ = (plantPosition.z + 1) + radius * Mathf.Sin(Mathf.Deg2Rad * angle);
+
+            Vector3 plantSpawnWorld = new Vector3(plantSpawnX + 1, 0f, plantSpawnZ + 1);
+
+            // Ajusta la altura de la posición para que esté en la superficie del terreno
+            float terrainHeight = mapMatrix.terreno.SampleHeight(plantSpawnWorld);
+            float terrainY = mapMatrix.terreno.GetPosition().y;
+
+            if (terrainHeight < terrainY)
+            {
+                plantSpawnWorld.y = terrainY;
+            }
+            else
+            {
+                plantSpawnWorld.y = terrainHeight;
+            }
+
+            Instantiate(spawnplants[i], plantSpawnWorld, Quaternion.identity);
+            plantPositions.Add(plantSpawnWorld);
+        }
+
+        return plantPositions;
+    }
+
+    Vector3 CalculateAveragePlantPosition(List<Vector3> plantPositions)
+    {
+        Vector3 averagePlantPosition = Vector3.zero;
+
+        foreach (Vector3 plantPos in plantPositions)
+        {
+            averagePlantPosition += plantPos;
+        }
+
+        averagePlantPosition /= plantPositions.Count;
+
+        return averagePlantPosition;
+    }
+
+    void AdjustTreeHeight(GameObject tree, Vector3 averagePlantPosition)
+    {
+        // Ajusta la altura de la posición del árbol para que esté en la superficie del terreno
+        float terrainHeightTree = mapMatrix.terreno.SampleHeight(averagePlantPosition);
+        float terrainYTree = mapMatrix.terreno.GetPosition().y;
+
+        if (terrainHeightTree < terrainYTree)
+        {
+            averagePlantPosition.y = terrainYTree;
+        }
+        else
+        {
+            averagePlantPosition.y = terrainHeightTree;
+        }
+
+        // Establece la posición del árbol en el promedio de las posiciones de las plantas
+        tree.transform.position = new Vector3(averagePlantPosition.x, tree.transform.position.y, averagePlantPosition.z);
+    }
+
     IEnumerator GrowTree(GameObject tree)
     {
         float timeElapsed = 0f;
 
+        // Desactiva el trigger antes de comenzar el crecimiento
+        Collider treeCollider = tree.GetComponent<Collider>();
+        if (treeCollider != null)
+        {
+            treeCollider.isTrigger = false;
+            tree.tag = "Untagged";
+        }
+
         while (timeElapsed < growthTime)
         {
+            tree.SetActive(true);
             timeElapsed += Time.deltaTime;
             tree.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timeElapsed / growthTime);
             yield return null;
