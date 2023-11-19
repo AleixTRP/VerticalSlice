@@ -10,6 +10,7 @@ TagManager:
   - SmallTree
   - SmallPine
   - Matrix
+  - SmallOak
   layers:
   - Default
   - TransparentFX

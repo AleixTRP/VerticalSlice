@@ -92,5 +92,10 @@ public class Inventory : MonoBehaviour
             // Agrega el objeto al inventario cuando el jugador pasa por encima
             AddToInventory(other.gameObject);
         }
+        if (other.CompareTag("SmallOak") && !IsInventoryFull)
+        {
+            // Agrega el objeto al inventario cuando el jugador pasa por encima
+            AddToInventory(other.gameObject);
+        }
     }
 }

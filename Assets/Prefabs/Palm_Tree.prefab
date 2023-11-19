@@ -69,7 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 3
   gm: {fileID: 3689792863031276966}
-  smallTreePrefab: {fileID: 0}
+  smallTreePrefab: {fileID: 1377331622712542, guid: 1cc59facd2d6a38429e3e31df6e37520, type: 3}
 --- !u!54 &5772007378313076998
 Rigidbody:
   m_ObjectHideFlags: 0

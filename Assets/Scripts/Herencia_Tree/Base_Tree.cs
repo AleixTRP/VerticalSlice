@@ -43,7 +43,7 @@ public class Base_Tree : MonoBehaviour
 
     protected virtual void Plant()
     {
-        // Implementación común para plantar árboles
+        // Implementaci?n com?n para plantar ?rboles
         Inventory playerInventory = GetComponent<Inventory>();
 
         if (playerInventory != null && playerInventory.InventoryCount > 0)
@@ -62,7 +62,7 @@ public class Base_Tree : MonoBehaviour
                 playerInventory.RemoveFromInventory(treeFromInventory);
 
                 Vector3 cuadrante = mapMatrix.ObtenerPosicionCuadrante(treeFromInventory.transform.position);
-                Debug.Log("Árbol y plantas instanciados en el cuadrante: " + cuadrante);
+                Debug.Log("?rbol y plantas instanciados en el cuadrante: " + cuadrante);
 
                 if (WinPlants == 3)
                 {
@@ -71,12 +71,12 @@ public class Base_Tree : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No se pudo obtener el árbol del inventario.");
+                Debug.LogWarning("No se pudo obtener el ?rbol del inventario.");
             }
         }
         else
         {
-            Debug.LogWarning("Inventario no válido o sin árboles.");
+            Debug.LogWarning("Inventario no v?lido o sin ?rboles.");
         }
     }
 
@@ -171,4 +171,3 @@ public class Base_Tree : MonoBehaviour
         }
     }
 }
-

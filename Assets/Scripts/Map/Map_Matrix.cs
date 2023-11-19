@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Map_Matrix : MonoBehaviour
 {
-    
-    private int filas = 100;
-    
-    private int columnas = 100;
+
+    private int filas = 5;
+
+    private int columnas = 5;
 
     private int subdivisionesEnFilas = 2;
     private int subdivisionesEnColumnas = 2;
 
-   
+
     public Terrain terreno;
-   
+
     [SerializeField]
-    private Transform jugador; 
+    private Transform jugador;
 
     private bool[,] cuadrantesReplantados;
 
@@ -33,7 +33,7 @@ public class Map_Matrix : MonoBehaviour
         InicializarMatrizCuadrantes();
         DividirTerrenoEnCuadrantes();
 
-        // Inicializa la posición anterior del jugador al inicio
+        // Inicializa la posici?n anterior del jugador al inicio
         posicionAnteriorJugador = ObtenerPosicionCuadrante(jugador.position);
     }
 
@@ -51,7 +51,7 @@ public class Map_Matrix : MonoBehaviour
     void InicializarMatrizCuadrantes()
     {
         cuadrantesReplantados = new bool[filas * subdivisionesEnFilas, columnas * subdivisionesEnColumnas];
-        
+
     }
 
     void DividirTerrenoEnCuadrantes()
@@ -79,7 +79,7 @@ public class Map_Matrix : MonoBehaviour
         Debug.Log("El jugador ha cambiado de cuadrante. Fila: " + filaActual + ", Columna: " + columnaActual);
     }
 
-   public Vector3 ObtenerPosicionCuadrante(Vector3 posicion)
+    public Vector3 ObtenerPosicionCuadrante(Vector3 posicion)
     {
         float x = Mathf.Floor(posicion.x / terreno.terrainData.size.x * columnas * subdivisionesEnColumnas);
         float z = Mathf.Floor(posicion.z / terreno.terrainData.size.z * filas * subdivisionesEnFilas);
@@ -89,18 +89,18 @@ public class Map_Matrix : MonoBehaviour
 
     public void ActualizarCuadrante(Vector3 posicion)
     {
-        // Obtener el tamaño total del terreno
+        // Obtener el tama?o total del terreno
         float tamanoX = terreno.terrainData.size.x;
         float tamanoZ = terreno.terrainData.size.z;
 
-        // Calcular el tamaño de cada cuadrante
+        // Calcular el tama?o de cada cuadrante
         float tamanoCuadranteX = tamanoX / columnas;
         float tamanoCuadranteZ = tamanoZ / filas;
 
         // Convierte las coordenadas del mundo a las coordenadas locales del objeto Map_Matrix
         Vector3 posicionLocal = transform.InverseTransformPoint(posicion);
 
-        // Calcula la posición en términos de la matriz de cuadrantes
+        // Calcula la posici?n en t?rminos de la matriz de cuadrantes
         int fila = Mathf.FloorToInt(posicionLocal.z / tamanoCuadranteZ);
         int columna = Mathf.FloorToInt(posicionLocal.x / tamanoCuadranteX);
 
