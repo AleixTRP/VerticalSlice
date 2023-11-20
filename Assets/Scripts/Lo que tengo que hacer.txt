@@ -1,0 +1,17 @@
+Ahora mismo el personage esta plantando el tipo de arbol y decidiendo cuanto tiempo tarda el arbol en creecer, con los dos script de herencia en el personage pilla el primer
+script que tiene agregado. 
+
+
+Los arboles que estan en el mapa, uno tiene el trigger para los colliders, y tiene de hijo un objeto vacio que mira si esta a rango del character y si esta a rango, deja darle
+a la E para poder talarlo, cuando lo tala deja un arbol pequeño que este por un tag se agrega al inventario. El inventario esta en el player. 
+
+
+
+El inventario suelta los arboles por los primeros que los pilla, el problema es hacer que cada arbol tenga su propio tiempo e instancie diferentes cosas. Solución hacemos
+hacemos un prefab base de arbol para que tenga todo de base y despues se intancie en el mapa. Sino podriamos hacer una classe muy grande donde esten todos los tipos de arboles 
+con sus propios tiempo y que todo se diferencia por tags.
+
+
+2-Cuando se haga el prefab se prepare para poder agregar una pet al arbol. De momento agregare tes tipos de arboles diferentes, el arbol Base que sea pequeño y fino, tardara 30
+segundos en crecer, el segundo arbol sera mediano y tardara el doble en crecer 60 segundos y el tercer arbol más grande y tardara 120segundos en crecer.
+

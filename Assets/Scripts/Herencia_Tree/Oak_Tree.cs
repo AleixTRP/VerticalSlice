@@ -5,13 +5,13 @@ using UnityEngine;
 public class Oak_Tree : Base_Tree
 {
     [SerializeField] private float oakGrowthTime = 40f;  // Nuevo tiempo de crecimiento para el roble
-    [SerializeField] private GameObject oakPrefab;       // Nuevo prefab para el roble
+
 
     protected override void Start()
     {
         base.Start();  // Llamada al método Start de la clase base
 
-        // Puedes agregar cualquier inicialización específica del roble aquí si es necesario.
+        
     }
 
     protected override void Plant()
@@ -25,14 +25,13 @@ public class Oak_Tree : Base_Tree
             if (treeFromInventory != null)
             {
                 // Verifica si el árbol en el inventario es un roble
-                if (treeFromInventory.GetComponent<Oak_Tree>() != null)
-                {
+               
                     Vector3 plantPosition = transform.position;
                     mapMatrix.ActualizarCuadrante(plantPosition);
 
                     AdjustTreePosition(treeFromInventory, plantPosition);
 
-                    StartCoroutine(GrowOakTree(treeFromInventory));
+                    StartCoroutine(GrowTree(treeFromInventory));
 
                     playerInventory.RemoveFromInventory(treeFromInventory);
 
@@ -43,11 +42,7 @@ public class Oak_Tree : Base_Tree
                     {
                         Debug.LogError("Win");
                     }
-                }
-                else
-                {
-                    Debug.LogWarning("No se pudo obtener el roble del inventario.");
-                }
+               
             }
             else
             {
@@ -61,7 +56,7 @@ public class Oak_Tree : Base_Tree
     }
 
     // Nuevo método específico para el roble.
-    protected virtual IEnumerator GrowOakTree(GameObject tree)
+    protected override  IEnumerator GrowTree(GameObject tree)
     {
         float timeElapsed = 0f;
 
@@ -87,6 +82,7 @@ public class Oak_Tree : Base_Tree
 
         while (timeElapsed < oakGrowthTime)
         {
+            Debug.Log(timeElapsed);
             timeElapsed += Time.deltaTime;
 
             // Si ya se ha activado el roble, evita instanciarlo de nuevo.
