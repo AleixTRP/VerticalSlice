@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Base_Tree : MonoBehaviour
 {
-    [SerializeField] protected  float growthTime = 10f;
+    [SerializeField] protected float growthTime = 10f;
     protected bool nearCuadrante = false;
     protected Map_Matrix mapMatrix;
     [SerializeField] protected GameObject Map_Terrain;
@@ -152,8 +152,8 @@ public class Base_Tree : MonoBehaviour
     }
 
 
-   
-    protected virtual  IEnumerator GrowTree(GameObject tree)
+
+    protected virtual IEnumerator GrowTree(GameObject tree)
     {
         float timeElapsed = 0f;
 
@@ -166,7 +166,7 @@ public class Base_Tree : MonoBehaviour
 
         while (timeElapsed < growthTime)
         {
-           
+
             Debug.Log(timeElapsed);
             tree.SetActive(true);
             timeElapsed += Time.deltaTime;

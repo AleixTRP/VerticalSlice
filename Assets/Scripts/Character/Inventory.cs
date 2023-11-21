@@ -50,6 +50,7 @@ public class Inventory : MonoBehaviour
             // Mensaje de depuración
             Debug.Log("Usando elemento del inventario: " + inventory[index].name);
 
+
             // Elimina el objeto del inventario
             inventory.RemoveAt(index);
         }
