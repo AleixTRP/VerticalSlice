@@ -17,6 +17,10 @@ public class CutPalmTree : MonoBehaviour
 
     private Inventory playerInventory;
 
+
+    [SerializeField]
+    private Animator animator;
+
     private void Start()
     {
         gm = transform.parent.gameObject;
@@ -27,11 +31,15 @@ public class CutPalmTree : MonoBehaviour
     {
         if (other.gameObject.CompareTag("RangoCharacter"))
         {
-            Debug.Log("Entra");
-            canHit = true;
+            
+              
+                Debug.Log("Entra");
+                canHit = true;
+            
         }
         else if (other.gameObject.CompareTag("SmallTree") && canHit)
         {
+          
             // El jugador pasó por encima del árbol pequeño, agregar al inventario y destruirlo
             playerInventory = other.GetComponent<Inventory>();
            
@@ -39,7 +47,7 @@ public class CutPalmTree : MonoBehaviour
             {
                 playerInventory.AddToInventory(other.gameObject);
             }
-
+           
             Destroy(other.gameObject);
         }
     }
@@ -48,6 +56,7 @@ public class CutPalmTree : MonoBehaviour
     {
         if (other.gameObject.CompareTag("RangoCharacter"))
         {
+            
             Debug.Log("Sale");
             canHit = false;
         }
@@ -59,11 +68,13 @@ public class CutPalmTree : MonoBehaviour
         {
             if (Input_Manager._INPUT_MANAGER.GetButtonCut())
             {
+              
                 life--;
             }
 
             if (life <= 0)
             {
+                animator.SetBool("cut", false);
                 Debug.Log("Destruir");
 
                 // Generar un árbol pequeño con un 50% de probabilidad

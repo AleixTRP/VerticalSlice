@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1292220771}
-  m_IndirectSpecularColor: {r: 0.3731189, g: 0.38073918, b: 0.35872677, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731187, g: 0.38073924, b: 0.3587268, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -288,6 +288,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Maceta
       objectReference: {fileID: 0}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -470,6 +474,10 @@ PrefabInstance:
       propertyPath: plants
       value: 
       objectReference: {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1612,7 +1620,6 @@ MonoBehaviour:
   velocityXZ: 5
   cam: {fileID: 80463138}
   animator: {fileID: 579350346}
-  Rotation_Smoothness: 0
 --- !u!143 &579350342
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1798,6 +1805,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Maceta
       objectReference: {fileID: 0}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2181,6 +2192,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Maceta
       objectReference: {fileID: 0}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2891,6 +2906,10 @@ PrefabInstance:
       propertyPath: plants
       value: 
       objectReference: {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -3123,6 +3142,10 @@ PrefabInstance:
       propertyPath: plants
       value: 
       objectReference: {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -3955,6 +3978,10 @@ PrefabInstance:
       propertyPath: plants
       value: 
       objectReference: {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
+    - target: {fileID: 4954940460867197234, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 579350346}
     - target: {fileID: 5521123274855127029, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: m_RootOrder
       value: -1

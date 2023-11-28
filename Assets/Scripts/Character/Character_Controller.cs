@@ -9,7 +9,6 @@ public class Character_Controller : MonoBehaviour
     private CharacterController controller;
     private Vector3 finalVelocity = Vector3.zero;
 
-
     [SerializeField]
     private float velocityXZ = 5f;
 
@@ -21,64 +20,57 @@ public class Character_Controller : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-    private float targetAngle;
-
-
-    [SerializeField] private float Rotation_Smoothness;
-    private Quaternion Quaternion_Rotate_From;
-    private Quaternion Quaternion_Rotate_To;
-
-    Vector3 desiredMoveDirection;
-
-
-
-
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-
     }
 
     private void Update()
     {
-        Vector3 direction = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * new Vector3(movementInput.x, 0f, movementInput.z);
-        direction.Normalize();
-
+        // Obtener la entrada de movimiento
         Vector2 inputVector = Input_Manager._INPUT_MANAGER.GetLeftAxisValue();
         movementInput = new Vector3(inputVector.x, 0f, inputVector.y);
         movementInput.Normalize();
 
-
+        // Calcular la dirección basada en la rotación de la cámara
+        Vector3 direction = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * movementInput;
+        direction.Normalize();
 
         if (direction != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(direction);
+            // Calcular la rotación deseada hacia la dirección de la velocidad
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
         }
 
-        // Calcular velocidad XZ
+        // Calcular la velocidad en el plano XZ
         finalVelocity.x = direction.x * velocityXZ;
         finalVelocity.z = direction.z * velocityXZ;
 
-        float speed = Mathf.Abs(finalVelocity.magnitude);
-
-     
-
-
-        // Asignar dirección Y
-        direction.y = -1f;
+        // Mover al personaje
         controller.Move(finalVelocity * Time.deltaTime);
 
-        Debug.Log(finalVelocity.z);
+        // Debug.Log(finalVelocity.z);
 
+        // Establecer el parámetro del animador para la velocidad
+        float speed = Mathf.Abs(finalVelocity.magnitude);
         animator.SetFloat("velocity", speed);
 
+        animator.SetBool("cut", false);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Maceta"))
+        {
+            Input_Manager._INPUT_MANAGER.GetButtonCut();
+            animator.SetBool("cut", true);
+            animator.SetBool("RangeCut", true);
+
+        }
         
     }
-
-   
-
+    
 }
-
 
 
 
