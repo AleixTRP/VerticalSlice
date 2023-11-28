@@ -18,12 +18,25 @@ public class Character_Controller : MonoBehaviour
     [SerializeField]
     private GameObject cam;
 
-  
+    [SerializeField]
+    private Animator animator;
+
+    private float targetAngle;
+
+
+    [SerializeField] private float Rotation_Smoothness;
+    private Quaternion Quaternion_Rotate_From;
+    private Quaternion Quaternion_Rotate_To;
+
+    Vector3 desiredMoveDirection;
+
+
+
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-     
+
     }
 
     private void Update()
@@ -35,19 +48,37 @@ public class Character_Controller : MonoBehaviour
         movementInput = new Vector3(inputVector.x, 0f, inputVector.y);
         movementInput.Normalize();
 
+
+
+        if (direction != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+
         // Calcular velocidad XZ
         finalVelocity.x = direction.x * velocityXZ;
         finalVelocity.z = direction.z * velocityXZ;
 
-        float speed = finalVelocity.z;
+        float speed = Mathf.Abs(finalVelocity.magnitude);
 
-       
+     
+
 
         // Asignar dirección Y
         direction.y = -1f;
         controller.Move(finalVelocity * Time.deltaTime);
+
+        Debug.Log(finalVelocity.z);
+
+        animator.SetFloat("velocity", speed);
+
+        
     }
+
+   
+
 }
+
 
 
 
