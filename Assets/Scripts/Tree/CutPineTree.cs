@@ -21,6 +21,9 @@ public class CutPineTree : MonoBehaviour
     [SerializeField]
     List<GameObject> smallPlants;
 
+    [SerializeField]
+    private Animator animator;
+
 
 
 
@@ -67,11 +70,15 @@ public class CutPineTree : MonoBehaviour
         {
             if (Input_Manager._INPUT_MANAGER.GetButtonCut())
             {
+                Debug.Log("Entra en la animación de Talar");
+                animator.SetBool("cut", true);
                 life--;
             }
 
             if (life <= 0)
             {
+                
+                animator.SetBool("cut", false);
                 Debug.Log("Destruir");
 
                 // Generar un árbol pequeño con un 70% de probabilidad

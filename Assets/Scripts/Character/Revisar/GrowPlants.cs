@@ -16,6 +16,7 @@ public class GrowPlants : MonoBehaviour
 
     [SerializeField] private int WinPlants;
     [SerializeField] private GameObject[] spawnplants;
+    [SerializeField] private Animator animator;
 
     void Start()
     {
@@ -27,9 +28,12 @@ public class GrowPlants : MonoBehaviour
     {
         if (nearCuadrante && Input_Manager._INPUT_MANAGER.GetButtonPlant())
         {
+            animator.SetBool("plant", true);
+            Debug.Log("Entra en la animación de plantar");
             WinPlants++;
             Plant();
         }
+      
     }
 
     void OnTriggerEnter(Collider other)
@@ -65,7 +69,7 @@ public class GrowPlants : MonoBehaviour
 
                     // Ajusta la posición del árbol en función de las plantas pequeñas
                     AdjustTreePosition(treeFromInventory, plantPosition);
-
+                   
                     // Inicia la corutina de crecimiento para este árbol específico
                     StartCoroutine(GrowTree(treeFromInventory));
 
@@ -173,7 +177,7 @@ public class GrowPlants : MonoBehaviour
     IEnumerator GrowTree(GameObject tree)
     {
         float timeElapsed = 0f;
-
+        animator.SetBool("plant", false);
         // Desactiva el trigger antes de comenzar el crecimiento
         Collider treeCollider = tree.GetComponent<Collider>();
         if (treeCollider != null)

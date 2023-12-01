@@ -68,13 +68,15 @@ public class CutPalmTree : MonoBehaviour
         {
             if (Input_Manager._INPUT_MANAGER.GetButtonCut())
             {
-              
+                Debug.Log("Entra en la animación de Talar");
+                animator.SetBool("cut", true);
                 life--;
             }
 
             if (life <= 0)
             {
                 animator.SetBool("cut", false);
+              
                 Debug.Log("Destruir");
 
                 // Generar un árbol pequeño con un 50% de probabilidad

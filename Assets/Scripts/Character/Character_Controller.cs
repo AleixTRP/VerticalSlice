@@ -56,20 +56,9 @@ public class Character_Controller : MonoBehaviour
         float speed = Mathf.Abs(finalVelocity.magnitude);
         animator.SetFloat("velocity", speed);
 
-        animator.SetBool("cut", false);
+      
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Maceta"))
-        {
-            Input_Manager._INPUT_MANAGER.GetButtonCut();
-            animator.SetBool("cut", true);
-            animator.SetBool("RangeCut", true);
-
-        }
-        
-    }
-    
+ 
 }
 
 

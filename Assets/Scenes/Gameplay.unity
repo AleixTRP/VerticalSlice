@@ -144,22 +144,7 @@ MonoBehaviour:
   gm: {fileID: 93311762}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
---- !u!114 &52064902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 52064896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7033b48bc3c9b48bcf5e185b546d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  growthTime: 10
-  Map_Terrain: {fileID: 1965343977}
-  WinPlants: 0
-  spawnplants: []
+  animator: {fileID: 579350346}
 --- !u!1 &80463138
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +554,7 @@ MonoBehaviour:
   gm: {fileID: 306897114}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
+  animator: {fileID: 579350346}
 --- !u!1001 &325209015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -686,6 +672,7 @@ MonoBehaviour:
   gm: {fileID: 456784679}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
+  animator: {fileID: 579350346}
 --- !u!1001 &390337919
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1692,6 +1679,7 @@ MonoBehaviour:
   Map_Terrain: {fileID: 1727932959}
   WinPlants: 0
   spawnplants: []
+  animator: {fileID: 579350346}
 --- !u!114 &579350345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2354,6 +2342,7 @@ MonoBehaviour:
   gm: {fileID: 84640346}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
+  animator: {fileID: 579350346}
 --- !u!1 &997858493 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: ff53e1a687da3e94aad8ba03f54ffac9, type: 3}
@@ -2969,9 +2958,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8572944747119746252, guid: f839f4c37f32fb64897093094886453d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1761648687}
-    - targetCorrespondingSourceObject: {fileID: 8572944747119746252, guid: f839f4c37f32fb64897093094886453d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1761648692}
   m_SourcePrefab: {fileID: 100100000, guid: f839f4c37f32fb64897093094886453d, type: 3}
 --- !u!1001 &1482265795
 PrefabInstance:
@@ -3237,6 +3223,7 @@ MonoBehaviour:
   gm: {fileID: 1598084611}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
+  animator: {fileID: 579350346}
 --- !u!1 &1632610563
 GameObject:
   m_ObjectHideFlags: 0
@@ -3523,22 +3510,7 @@ MonoBehaviour:
   gm: {fileID: 341993344}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
---- !u!114 &1761648692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761648685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7033b48bc3c9b48bcf5e185b546d7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  growthTime: 10
-  Map_Terrain: {fileID: 1965343977}
-  WinPlants: 0
-  spawnplants: []
+  animator: {fileID: 579350346}
 --- !u!1001 &1784451814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3712,6 +3684,7 @@ MonoBehaviour:
   gm: {fileID: 712202317}
   smallPinePrefab: {fileID: 192044, guid: b4ed40ac881c025408869dbcb4312648, type: 3}
   smallPlants: []
+  animator: {fileID: 579350346}
 --- !u!1 &1883095163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4041,9 +4014,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8572944747119746252, guid: f839f4c37f32fb64897093094886453d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 52064898}
-    - targetCorrespondingSourceObject: {fileID: 8572944747119746252, guid: f839f4c37f32fb64897093094886453d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 52064902}
   m_SourcePrefab: {fileID: 100100000, guid: f839f4c37f32fb64897093094886453d, type: 3}
 --- !u!1001 &2037578770
 PrefabInstance:
