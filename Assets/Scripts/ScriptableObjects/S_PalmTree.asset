@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
+  m_Name: S_PalmTree
+  m_EditorClassIdentifier: 
+  growthSpeed: 50
+  dayMultiplier: 1
+  nightMultiplier: 0.5
+  luckyTree: 1
+  hitTree: 8

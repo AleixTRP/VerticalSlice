@@ -6,9 +6,10 @@ using static UnityEditor.PlayerSettings;
 public class CutPineTree : MonoBehaviour
 {
     private bool canHit;
+    private bool hasTouchedThisFrame;
+    private bool isCuttingAnimationPlaying;
 
-    [SerializeField]
-    private int life = 3;
+    [SerializeField] private TreeScriptableObject Stree;
 
     [SerializeField]
     private GameObject gm;
@@ -19,19 +20,13 @@ public class CutPineTree : MonoBehaviour
     private Inventory playerInventory;
 
     [SerializeField]
-    List<GameObject> smallPlants;
-
-    [SerializeField]
     private Animator animator;
-
-
-
 
     private void Start()
     {
         gm = transform.parent.gameObject;
-
-     
+    
+        isCuttingAnimationPlaying = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,7 +42,6 @@ public class CutPineTree : MonoBehaviour
             playerInventory = other.GetComponent<Inventory>();
             if (playerInventory != null)
             {
-                
                 playerInventory.AddToInventory(other.gameObject);
             }
 
@@ -66,34 +60,53 @@ public class CutPineTree : MonoBehaviour
 
     private void Update()
     {
-        if (canHit)
+        hasTouchedThisFrame = false;
+
+        if (canHit && !hasTouchedThisFrame)
         {
-            if (Input_Manager._INPUT_MANAGER.GetButtonCut())
+            // Utiliza el nuevo Input System exclusivamente
+            if (Input_Manager._INPUT_MANAGER.GetButtonCut() && Stree.hitTree > 0 && !isCuttingAnimationPlaying)
             {
                 Debug.Log("Entra en la animación de Talar");
-                animator.SetBool("cut", true);
-                life--;
-            }
 
-            if (life <= 0)
-            {
-                
-                animator.SetBool("cut", false);
-                Debug.Log("Destruir");
+                // Inicia la animación de corte
+                StartCoroutine(PlayCuttingAnimation());
 
-                // Generar un árbol pequeño con un 70% de probabilidad
-                if (Random.value < 0.7f && smallPinePrefab != null)
+                // Reduce la vida del árbol
+                Stree.hitTree--;
+                hasTouchedThisFrame = true;
+
+                if (Stree.hitTree <= 0)
                 {
-                    // Instanciar el árbol pequeño en la escena
-                    GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
+                    Debug.Log("Destruir");
+                    animator.SetBool("cut", false);
+                   
+                    if (Random.value < Stree.luckyTree && smallPinePrefab != null)
+                    {
+                        // Instanciar el árbol pequeño en la escena
+                        GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
+                    }
 
-                    
+                    // Destruir el objeto padre (árbol completo)
+                    Destroy(gm);
                 }
-
-
-                // Destruir el objeto padre (árbol completo)
-                Destroy(gm);
             }
         }
+    }
+
+    private IEnumerator PlayCuttingAnimation()
+    {
+        // Marca la animación como en reproducción
+        isCuttingAnimationPlaying = true;
+
+        // Inicia la animación
+        animator.SetBool("cut", true);
+
+        // Espera hasta que la animación esté completa
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        // Marca la animación como finalizada
+        animator.SetBool("cut", false);
+        isCuttingAnimationPlaying = false;
     }
 }

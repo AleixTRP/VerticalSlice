@@ -50,7 +50,7 @@ public class Character_Controller : MonoBehaviour
         // Mover al personaje
         controller.Move(finalVelocity * Time.deltaTime);
 
-        // Debug.Log(finalVelocity.z);
+       
 
         // Establecer el parámetro del animador para la velocidad
         float speed = Mathf.Abs(finalVelocity.magnitude);

@@ -5,18 +5,26 @@ using UnityEngine;
 public class GrowPlant : MonoBehaviour
 {
     [SerializeField] private GameObject[] spawnplants;
-
     private Map_Matrix mapMatrix;
-
     [SerializeField] private TreeScriptableObject Stree;
 
-     public void AdjustTreePosition(Vector3 plantPosition)
+    private Animator animator;
+
+
+    void Start()
     {
-        // Ajusta la posición del árbol en función de las plantas pequeñas
+        mapMatrix = FindObjectOfType<Map_Matrix>();
+
+        if (mapMatrix == null)
+        {
+            Debug.LogError("No se pudo encontrar un objeto Map_Matrix en la escena.");
+        }
+    }
+
+    public void AdjustTreePosition(Vector3 plantPosition)
+    {
         List<Vector3> plantPositions = GeneratePlantPositions(plantPosition);
-
         Vector3 averagePlantPosition = CalculateAveragePlantPosition(plantPositions);
-
         AdjustTreeHeight(averagePlantPosition);
     }
 
@@ -54,6 +62,7 @@ public class GrowPlant : MonoBehaviour
         return plantPositions;
     }
 
+
     Vector3 CalculateAveragePlantPosition(List<Vector3> plantPositions)
     {
         Vector3 averagePlantPosition = Vector3.zero;
@@ -84,14 +93,14 @@ public class GrowPlant : MonoBehaviour
         }
 
         // Establece la posición del árbol en el promedio de las posiciones de las plantas
-       transform.position = new Vector3(averagePlantPosition.x, transform.position.y, averagePlantPosition.z);
+        transform.position = new Vector3(averagePlantPosition.x, transform.position.y, averagePlantPosition.z);
     }
 
-   public IEnumerator GrowTree()
+    public IEnumerator GrowTree()
     {
         float timeElapsed = 0f;
-        // Desactiva el trigger antes de comenzar el crecimiento
         Collider treeCollider = gameObject.GetComponent<Collider>();
+
         if (treeCollider != null)
         {
             treeCollider.isTrigger = false;
@@ -100,9 +109,11 @@ public class GrowPlant : MonoBehaviour
 
         while (timeElapsed < Stree.growthSpeed)
         {
+            
             gameObject.SetActive(true);
             timeElapsed += Time.deltaTime;
             gameObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timeElapsed / Stree.growthSpeed);
+            
             yield return null;
         }
     }

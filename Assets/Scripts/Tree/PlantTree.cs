@@ -1,93 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlantTree : MonoBehaviour
 {
-    private bool nearCuadrante = false;
-    private Map_Matrix mapMatrix; // Referencia al script Map_Matrix
+    private Map_Matrix mapMatrix;
 
-    [SerializeField] private GameObject Map_Terrain;
+    [SerializeField] private float distanceFromPlayer = 2f;
 
-    [SerializeField] private int WinPlants;
-
+    [SerializeField]
+    private Animator animator;
     void Start()
     {
-
-        // Obtén la referencia al script Map_Matrix
         mapMatrix = FindObjectOfType<Map_Matrix>();
     }
 
     void Update()
     {
-        if (nearCuadrante)
+        if (Input_Manager._INPUT_MANAGER.GetButtonPlant() && !animator.GetBool("plant"))
         {
-            //var tree = Instantiate
-            Debug.Log("Entra en la animación de plantar");
-
-
-            Plant();
-        }
-
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Matrix")) // Cambia a la etiqueta correspondiente
-        {
-            nearCuadrante = true;
+            StartCoroutine(PlantTreeWithAnimation());
         }
     }
 
-    void OnTriggerExit(Collider other)
+    IEnumerator PlantTreeWithAnimation()
     {
-        if (other.CompareTag("Matrix")) // Cambia a la etiqueta correspondiente
+        animator.SetBool("plant", true);
+
+        // Espera hasta que la animación termine
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+        // Realiza la plantación solo si aún hay árboles en el inventario
+        Inventory playerInventory = GetComponent<Inventory>();
+        if (playerInventory != null && playerInventory.InventoryCount > 0)
         {
-            nearCuadrante = false;
+            PlantTreeInFront();
         }
+
+        // Restablece la animación
+        animator.SetBool("plant", false);
     }
 
-    public void Plant()
+    void PlantTreeInFront()
     {
-        if (nearCuadrante)
-        {
-            Inventory playerInventory = GetComponent<Inventory>();
+        Inventory playerInventory = GetComponent<Inventory>();
 
-            if (playerInventory != null && playerInventory.InventoryCount > 0)
+
+        if (playerInventory != null && playerInventory.InventoryCount > 0)
+        {
+            // Obtén el árbol del inventario
+            GameObject treeObject = playerInventory.GetFirstTreeFromInventory();
+
+            if (treeObject != null)
             {
-                GrowPlant treeFromInventory = playerInventory.GetFirstTreeFromInventory().GetComponent<GrowPlant>();
+                // Obtén la posición actual del jugador
+                Vector3 playerPosition = transform.position;
 
+                // Calcula la posición para plantar en la dirección (forward) del jugador
+                Vector3 plantPosition = playerPosition + transform.forward * distanceFromPlayer;
 
-                if (treeFromInventory != null)
-                {
-                    Vector3 plantPosition = transform.position;
-                    mapMatrix.ActualizarCuadrante(plantPosition);
+                // Establece la posición del árbol en la posición calculada
+                treeObject.transform.position = plantPosition;
 
-                    treeFromInventory.AdjustTreePosition(plantPosition);
+                // Actualiza el cuadrante después de plantar el árbol
+                mapMatrix.ActualizarCuadrante(plantPosition);
 
-                    // Inicia la corutina de crecimiento para este árbol específico
-                    StartCoroutine(treeFromInventory.GrowTree());
+                // Inicia la corutina de crecimiento para este árbol específico
+                StartCoroutine(treeObject.GetComponent<GrowPlant>().GrowTree());
 
-                    // Elimina el árbol del inventario 
-                    playerInventory.RemoveFromInventory(treeFromInventory.gameObject);
+                // Elimina el árbol del inventario
+                playerInventory.RemoveFromInventory(treeObject);
 
-                    // Obtiene el cuadrante después de plantar el árbol
-                    Vector3 cuadrante = mapMatrix.ObtenerPosicionCuadrante(treeFromInventory.transform.position);
-                    Debug.Log("Árbol y plantas instanciados en el cuadrante: " + cuadrante);
-                }
-                else
-                {
-                    Debug.LogWarning("No se pudo obtener el árbol del inventario.");
-                }
+             
+                Debug.Log("Árbol plantado delante del jugador en la posición: " + plantPosition);
             }
             else
             {
-                Debug.LogWarning("Inventario no válido o sin árboles.");
+                Debug.LogWarning("No se pudo obtener el árbol del inventario.");
             }
+        }
+        else
+        {
+            Debug.LogWarning("Inventario no válido o sin árboles.");
         }
     }
 }
-
