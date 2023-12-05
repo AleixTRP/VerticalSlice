@@ -10,5 +10,6 @@ public class TreeScriptableObject : ScriptableObject
     public float hitTree = 3f;
     public float dayMultiplier = 1.0f;
     public float nightMultiplier = 0.5f;
+    public GameObject gameObject;
 
 }

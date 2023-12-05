@@ -26,10 +26,13 @@ public class CutPineTree : MonoBehaviour
     private Animator animator;
 
 
+
+
   
 
     private void Start()
     {
+       
         treelife = Stree.hitTree;
         gm = transform.parent.gameObject;
     
@@ -72,17 +75,19 @@ public class CutPineTree : MonoBehaviour
 
         if (canHit && !hasTouchedThisFrame)
         {
-            // Utiliza el nuevo Input System exclusivamente
+          
             if (Input_Manager._INPUT_MANAGER.GetButtonCut() && treelife > 0 && !isCuttingAnimationPlaying)
             {
                 Debug.Log("Entra en la animación de Talar");
 
                 // Inicia la animación de corte
                 StartCoroutine(PlayCuttingAnimation());
+              
 
                 // Reduce la vida del árbol
                 treelife--;
                 hasTouchedThisFrame = true;
+               
                 if (treelife <= 0)
                 {
                     
@@ -97,7 +102,7 @@ public class CutPineTree : MonoBehaviour
                     }
 
                     // Destruir el objeto padre (árbol completo)
-                   //Destroy(gm);
+                   Destroy(gm);
                 }
             }
         }
@@ -110,7 +115,9 @@ public class CutPineTree : MonoBehaviour
 
         // Inicia la animación
         animator.SetBool("cut", true);
-
+      
+      
+       
         // Espera hasta que la animación esté completa
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
@@ -118,4 +125,11 @@ public class CutPineTree : MonoBehaviour
         animator.SetBool("cut", false);
         isCuttingAnimationPlaying = false;
     }
+
+    public GameObject GetPreviewTree()
+    {
+        return Stree.gameObject;
+    }
+
+
 }

@@ -126,10 +126,12 @@ public class GrowPlant : MonoBehaviour
 
             timeElapsed += Time.deltaTime * multiplayerDay;
             gameObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timeElapsed / Stree.growthSpeed);
+           
 
             yield return null;
         }
       
     }
+   
 }
 

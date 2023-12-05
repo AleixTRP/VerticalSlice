@@ -10,8 +10,16 @@ public class PlantTree : MonoBehaviour
 
     [SerializeField]
     private Animator animator;
+
+    [SerializeField]
+    private GameObject tool;
+
+    [SerializeField]
+    private ParticleSystem particleSystem;    
+
     void Start()
     {
+          
         mapMatrix = FindObjectOfType<Map_Matrix>();
     }
 
@@ -25,6 +33,8 @@ public class PlantTree : MonoBehaviour
 
     IEnumerator PlantTreeWithAnimation()
     {
+         
+        tool.SetActive(false); 
         animator.SetBool("plant", true);
 
         // Espera hasta que la animación termine
@@ -39,17 +49,23 @@ public class PlantTree : MonoBehaviour
 
         // Restablece la animación
         animator.SetBool("plant", false);
+        tool.SetActive(true);
+        
     }
 
     void PlantTreeInFront()
     {
         Inventory playerInventory = GetComponent<Inventory>();
+        CutPineTree TreeMap = GetComponent<CutPineTree>();  
 
 
         if (playerInventory != null && playerInventory.InventoryCount > 0)
         {
             // Obtén el árbol del inventario
             GameObject treeObject = playerInventory.GetFirstTreeFromInventory();
+
+            GameObject previewTree = TreeMap.GetPreviewTree();
+           
 
             if (treeObject != null)
             {
@@ -58,10 +74,17 @@ public class PlantTree : MonoBehaviour
 
                 // Calcula la posición para plantar en la dirección (forward) del jugador
                 Vector3 plantPosition = playerPosition + transform.forward * distanceFromPlayer;
-
+               
+                                         
                 // Establece la posición del árbol en la posición calculada
                 treeObject.transform.position = plantPosition;
 
+                Instantiate(particleSystem, plantPosition, Quaternion.identity);
+                
+                Instantiate(previewTree, plantPosition, Quaternion.identity);
+                
+                          
+                
                 // Actualiza el cuadrante después de plantar el árbol
                 mapMatrix.ActualizarCuadrante(plantPosition);
 

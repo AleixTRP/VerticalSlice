@@ -15,7 +15,6 @@ MonoBehaviour:
   growthSpeed: 80
   luckyTree: 1
   hitTree: 4
-  day: 6
-  night: 12
   dayMultiplier: 1
   nightMultiplier: 0.5
+  gameObject: {fileID: 127550, guid: 5445c7553f255cd459493ab038b0e8bd, type: 3}

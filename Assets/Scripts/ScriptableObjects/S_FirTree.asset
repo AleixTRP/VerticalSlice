@@ -17,3 +17,4 @@ MonoBehaviour:
   hitTree: 3
   dayMultiplier: 0.5
   nightMultiplier: 3
+  gameObject: {fileID: 192044, guid: 3711419a013933f46b875b5ff04e88c9, type: 3}

@@ -9,19 +9,24 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private int maxInventorySize = 10; // Tamaño máximo del inventario
 
+  
+
+    public static Inventory Instance;
+   
     public int InventoryCount
     {
         get { return inventory.Count; }
     }
 
 
-    public static Inventory Instance;
-
     private void Awake()
     {
+       
         // Configurar la referencia estática al inventario
         Instance = this;
     }
+
+   
     public void AddToInventory(GameObject item)
     {
         if (!IsInventoryFull)
@@ -30,6 +35,8 @@ public class Inventory : MonoBehaviour
 
             // Desactiva el objeto en el suelo al agregarlo al inventario
             item.SetActive(false);
+
+            
 
             // Mensaje de depuración
             Debug.Log("Añadido al inventario: " + item.name);
@@ -65,14 +72,16 @@ public class Inventory : MonoBehaviour
     {
         if (inventory.Count > 0)
         {
+            
             return inventory[0];
+           
         }
         else
         {
             return null;
         }
     }
-    
+
     public void RemoveFromInventory(GameObject item)
     {
         inventory.Remove(item);
@@ -80,12 +89,6 @@ public class Inventory : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Verifica si el objeto en el suelo es interactuable y si el inventario no está lleno
-        if (other.CompareTag("SmallTree") && !IsInventoryFull)
-        {
-            // Agrega el objeto al inventario cuando el jugador pasa por encima
-            AddToInventory(other.gameObject);
-        }
 
         // Verifica si el objeto en el suelo es interactuable y si el inventario no está lleno
         if (other.CompareTag("SmallPine") && !IsInventoryFull)
@@ -93,10 +96,6 @@ public class Inventory : MonoBehaviour
             // Agrega el objeto al inventario cuando el jugador pasa por encima
             AddToInventory(other.gameObject);
         }
-        if (other.CompareTag("SmallOak") && !IsInventoryFull)
-        {
-            // Agrega el objeto al inventario cuando el jugador pasa por encima
-            AddToInventory(other.gameObject);
-        }
     }
+    
 }
