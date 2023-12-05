@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -24,12 +25,16 @@ public class CutPineTree : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+
+  
+
     private void Start()
     {
         treelife = Stree.hitTree;
         gm = transform.parent.gameObject;
     
         isCuttingAnimationPlaying = false;
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -80,6 +85,7 @@ public class CutPineTree : MonoBehaviour
                 hasTouchedThisFrame = true;
                 if (treelife <= 0)
                 {
+                    
                     Debug.Log("Destruir");
                     animator.SetBool("cut", false);
                                       
@@ -91,7 +97,7 @@ public class CutPineTree : MonoBehaviour
                     }
 
                     // Destruir el objeto padre (árbol completo)
-                    Destroy(gm);
+                   //Destroy(gm);
                 }
             }
         }
