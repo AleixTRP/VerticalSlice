@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class GrowPlant : MonoBehaviour
@@ -8,9 +9,10 @@ public class GrowPlant : MonoBehaviour
     private Map_Matrix mapMatrix;
     [SerializeField] private TreeScriptableObject Stree;
 
-    private Animator animator;
+    private DayNight dayNight;
 
-
+    private float multiplayerDay;
+ 
     void Start()
     {
         mapMatrix = FindObjectOfType<Map_Matrix>();
@@ -19,6 +21,7 @@ public class GrowPlant : MonoBehaviour
         {
             Debug.LogError("No se pudo encontrar un objeto Map_Matrix en la escena.");
         }
+        dayNight = FindObjectOfType<DayNight>();
     }
 
     public void AdjustTreePosition(Vector3 plantPosition)
@@ -98,6 +101,7 @@ public class GrowPlant : MonoBehaviour
 
     public IEnumerator GrowTree()
     {
+        gameObject.SetActive(true);
         float timeElapsed = 0f;
         Collider treeCollider = gameObject.GetComponent<Collider>();
 
@@ -109,13 +113,23 @@ public class GrowPlant : MonoBehaviour
 
         while (timeElapsed < Stree.growthSpeed)
         {
-            
-            gameObject.SetActive(true);
-            timeElapsed += Time.deltaTime;
+            float timeday = dayNight.GetCurrentHour();
+
+            if (timeday >= 6 && timeday < 19)
+            {
+                multiplayerDay = Stree.dayMultiplier;
+            }
+            else
+            {
+                multiplayerDay = Stree.nightMultiplier;
+            }
+
+            timeElapsed += Time.deltaTime * multiplayerDay;
             gameObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timeElapsed / Stree.growthSpeed);
-            
+
             yield return null;
         }
+      
     }
 }
 

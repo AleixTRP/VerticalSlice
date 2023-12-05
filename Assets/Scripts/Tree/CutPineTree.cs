@@ -11,6 +11,8 @@ public class CutPineTree : MonoBehaviour
 
     [SerializeField] private TreeScriptableObject Stree;
 
+    private float treelife;
+
     [SerializeField]
     private GameObject gm;
 
@@ -24,6 +26,7 @@ public class CutPineTree : MonoBehaviour
 
     private void Start()
     {
+        treelife = Stree.hitTree;
         gm = transform.parent.gameObject;
     
         isCuttingAnimationPlaying = false;
@@ -65,7 +68,7 @@ public class CutPineTree : MonoBehaviour
         if (canHit && !hasTouchedThisFrame)
         {
             // Utiliza el nuevo Input System exclusivamente
-            if (Input_Manager._INPUT_MANAGER.GetButtonCut() && Stree.hitTree > 0 && !isCuttingAnimationPlaying)
+            if (Input_Manager._INPUT_MANAGER.GetButtonCut() && treelife > 0 && !isCuttingAnimationPlaying)
             {
                 Debug.Log("Entra en la animación de Talar");
 
@@ -73,16 +76,16 @@ public class CutPineTree : MonoBehaviour
                 StartCoroutine(PlayCuttingAnimation());
 
                 // Reduce la vida del árbol
-                Stree.hitTree--;
+                treelife--;
                 hasTouchedThisFrame = true;
-
-                if (Stree.hitTree <= 0)
+                if (treelife <= 0)
                 {
                     Debug.Log("Destruir");
                     animator.SetBool("cut", false);
-                   
+                                      
                     if (Random.value < Stree.luckyTree && smallPinePrefab != null)
                     {
+                        Debug.Log("ArbolSpawn");
                         // Instanciar el árbol pequeño en la escena
                         GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
                     }
@@ -94,7 +97,7 @@ public class CutPineTree : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayCuttingAnimation()
+  private IEnumerator PlayCuttingAnimation()
     {
         // Marca la animación como en reproducción
         isCuttingAnimationPlaying = true;

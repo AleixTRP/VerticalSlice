@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
   m_Name: S_AdleTree
   m_EditorClassIdentifier: 
-  growthSpeed: 30
-  dayMultiplier: 1
-  nightMultiplier: 0.5
+  growthSpeed: 60
   luckyTree: 1
   hitTree: 3
+  day: 6
+  night: 12
+  dayMultiplier: 1
+  nightMultiplier: 0.5

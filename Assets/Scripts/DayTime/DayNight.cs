@@ -13,16 +13,16 @@ public class DayNight : MonoBehaviour
     [SerializeField]
     private float timeInMinutes = 1f;
 
-    //[SerializeField]
-    // private GameObject clouds;
-
-    //[SerializeField]
-    //private GameObject stars;
-
     private float sunX;
 
     private const float hoursInADay = 24f;
 
+
+
+    public float GetCurrentHour()
+    {
+        return currentHour;
+    }
     private void Update()
     {
         currentHour += Time.deltaTime * (hoursInADay / (60 * timeInMinutes));
@@ -31,7 +31,7 @@ public class DayNight : MonoBehaviour
             currentHour = 0;
         }
         RotateSun();
-        UpdateEnvironment();
+       
     }
 
     private void RotateSun()
@@ -47,22 +47,6 @@ public class DayNight : MonoBehaviour
         else
         {
             Sun.GetComponent<Light>().intensity = 1.5f;
-        }
-    }
-
-    private void UpdateEnvironment()
-    {
-        if (currentHour >= 6 && currentHour <= 18)
-        {
-          
-            // clouds.SetActive(true);
-            //stars.SetActive(false);
-        }
-        else
-        {
-           
-            // clouds.SetActive(false);
-            // stars.SetActive(true);
         }
     }
 }

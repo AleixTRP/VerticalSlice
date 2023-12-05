@@ -6,8 +6,9 @@ using UnityEngine;
 public class TreeScriptableObject : ScriptableObject
 {
     public float growthSpeed = 1.0f;
-    public float dayMultiplier = 1.0f;
-    public float nightMultiplier = 0.5f;
     public float luckyTree = 1f;
     public float hitTree = 3f;
+    public float dayMultiplier = 1.0f;
+    public float nightMultiplier = 0.5f;
+
 }

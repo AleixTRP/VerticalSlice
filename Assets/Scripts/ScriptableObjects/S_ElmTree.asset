@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
   m_Name: S_ElmTree
   m_EditorClassIdentifier: 
-  growthSpeed: 60
-  dayMultiplier: 1
-  nightMultiplier: 0.5
+  growthSpeed: 100
   luckyTree: 1
-  hitTree: 5
+  hitTree: 3
+  dayMultiplier: 0.1
+  nightMultiplier: 4

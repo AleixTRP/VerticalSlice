@@ -239,6 +239,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1243278771}
     m_Modifications:
+    - target: {fileID: 1708223252388583491, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708223252388583491, guid: f839f4c37f32fb64897093094886453d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 1922242113358565920, guid: f839f4c37f32fb64897093094886453d, type: 3}
       propertyPath: animator
       value: 
@@ -2415,7 +2423,7 @@ GameObject:
   - component: {fileID: 1727932961}
   - component: {fileID: 1727932964}
   - component: {fileID: 1727932963}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Terrain
   m_TagString: Matrix
   m_Icon: {fileID: 0}
