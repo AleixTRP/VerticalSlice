@@ -64,8 +64,7 @@ public class PlantTree : MonoBehaviour
             // Obtén el árbol del inventario
             GameObject treeObject = playerInventory.GetFirstTreeFromInventory();
 
-            GameObject previewTree = TreeMap.GetPreviewTree();
-           
+      
 
             if (treeObject != null)
             {
@@ -81,7 +80,6 @@ public class PlantTree : MonoBehaviour
 
                 Instantiate(particleSystem, plantPosition, Quaternion.identity);
                 
-                Instantiate(previewTree, plantPosition, Quaternion.identity);
                 
                           
                 

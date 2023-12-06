@@ -18,3 +18,4 @@ MonoBehaviour:
   dayMultiplier: 1
   nightMultiplier: 0.5
   gameObject: {fileID: 127550, guid: 5445c7553f255cd459493ab038b0e8bd, type: 3}
+  name: Ash

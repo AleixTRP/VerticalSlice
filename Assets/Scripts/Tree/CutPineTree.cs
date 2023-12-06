@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class CutPineTree : MonoBehaviour
 {
@@ -25,17 +22,12 @@ public class CutPineTree : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-
-
-
-  
-
     private void Start()
     {
-       
+
         treelife = Stree.hitTree;
         gm = transform.parent.gameObject;
-    
+
         isCuttingAnimationPlaying = false;
 
     }
@@ -75,25 +67,25 @@ public class CutPineTree : MonoBehaviour
 
         if (canHit && !hasTouchedThisFrame)
         {
-          
+
             if (Input_Manager._INPUT_MANAGER.GetButtonCut() && treelife > 0 && !isCuttingAnimationPlaying)
             {
                 Debug.Log("Entra en la animación de Talar");
 
                 // Inicia la animación de corte
                 StartCoroutine(PlayCuttingAnimation());
-              
+
 
                 // Reduce la vida del árbol
                 treelife--;
                 hasTouchedThisFrame = true;
-               
+
                 if (treelife <= 0)
                 {
-                    
+
                     Debug.Log("Destruir");
                     animator.SetBool("cut", false);
-                                      
+
                     if (Random.value < Stree.luckyTree && smallPinePrefab != null)
                     {
                         Debug.Log("ArbolSpawn");
@@ -102,22 +94,22 @@ public class CutPineTree : MonoBehaviour
                     }
 
                     // Destruir el objeto padre (árbol completo)
-                   Destroy(gm);
+                    Destroy(gm);
                 }
             }
         }
     }
 
-  private IEnumerator PlayCuttingAnimation()
+    private IEnumerator PlayCuttingAnimation()
     {
         // Marca la animación como en reproducción
         isCuttingAnimationPlaying = true;
 
         // Inicia la animación
         animator.SetBool("cut", true);
-      
-      
-       
+
+
+
         // Espera hasta que la animación esté completa
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
@@ -125,11 +117,4 @@ public class CutPineTree : MonoBehaviour
         animator.SetBool("cut", false);
         isCuttingAnimationPlaying = false;
     }
-
-    public GameObject GetPreviewTree()
-    {
-        return Stree.gameObject;
-    }
-
-
 }

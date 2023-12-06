@@ -9,10 +9,10 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private int maxInventorySize = 10; // Tamaño máximo del inventario
 
-  
+
 
     public static Inventory Instance;
-   
+
     public int InventoryCount
     {
         get { return inventory.Count; }
@@ -21,12 +21,12 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-       
+
         // Configurar la referencia estática al inventario
         Instance = this;
     }
 
-   
+
     public void AddToInventory(GameObject item)
     {
         if (!IsInventoryFull)
@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour
             // Desactiva el objeto en el suelo al agregarlo al inventario
             item.SetActive(false);
 
-            
+
 
             // Mensaje de depuración
             Debug.Log("Añadido al inventario: " + item.name);
@@ -72,9 +72,9 @@ public class Inventory : MonoBehaviour
     {
         if (inventory.Count > 0)
         {
-            
+
             return inventory[0];
-           
+
         }
         else
         {
@@ -97,5 +97,5 @@ public class Inventory : MonoBehaviour
             AddToInventory(other.gameObject);
         }
     }
-    
+
 }

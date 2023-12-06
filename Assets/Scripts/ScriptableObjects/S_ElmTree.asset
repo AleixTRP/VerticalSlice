@@ -18,3 +18,4 @@ MonoBehaviour:
   dayMultiplier: 0.1
   nightMultiplier: 4
   gameObject: {fileID: 1550140418629916, guid: c539d642b8256284ab1f5de327a08496, type: 3}
+  name: Elm
