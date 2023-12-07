@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Gameplay_Camera : MonoBehaviour
 {
+   
     [SerializeField] private GameObject target;
     [SerializeField] private float targetDistance;
     [SerializeField] private float cameraLerp; //12f
 
+  
 
     private Vector2 GetCamera;
 

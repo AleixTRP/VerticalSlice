@@ -7,22 +7,20 @@ using UnityEngine.UI;
 
 public class InitialMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject _camera;
     [SerializeField] private GameObject _menu;
 
     private void Start()
     {
         _menu.SetActive(true);
-        Time.timeScale = 1f;
-
+      
     }
+
+ 
     public void EjecutarAccionBoton()
     {
-     
-        if (Input_Manager._INPUT_MANAGER.GetLeftClick())
-        {
-            // Cambia a la escena especificada
-            SceneManager.LoadScene("Lvl1");
-        }
+        // Cambia a la escena especificada
+        SceneManager.LoadScene("Lvl2");
+
     }
 }
+

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Audio_Manager : MonoBehaviour
 {
-    public static Audio_Manager instance; // Singleton para acceder fácilmente desde otros scripts
+    public static Audio_Manager instance; 
     public AudioSource soundSource; // Fuente de audio para efectos de sonido
     public AudioSource musicSource; // Fuente de audio para la música de ambiente
 

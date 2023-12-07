@@ -7,7 +7,6 @@ public class MenuPause : MonoBehaviour
 {
     public static bool GamePaused = false;
     [SerializeField] private GameObject pauseMenuUI;
-    [SerializeField] private GameObject cameraController; 
 
     void Update()
     {
@@ -21,20 +20,20 @@ public class MenuPause : MonoBehaviour
     public void Pause()
     {
         pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f; // Pausa el juego
+        //Time.timeScale = 0f; // Pausa el juego
         GamePaused = true;
     }
 
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f; // Reanuda el juego
+        //Time.timeScale = 1f; // Reanuda el juego
         GamePaused = false;
     }
 
     public void QuitToMainMenu()
     {
-        Time.timeScale = 1f; // Asegúrate de restablecer el tiempo a su valor normal al cargar el menú principal
+        //Time.timeScale = 1f; // Asegúrate de restablecer el tiempo a su valor normal al cargar el menú principal
         SceneManager.LoadScene("InitialMenu");
     }
 }
