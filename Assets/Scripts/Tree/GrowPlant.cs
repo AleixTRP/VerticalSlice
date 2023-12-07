@@ -6,7 +6,7 @@ using UnityEngine;
 public class GrowPlant : MonoBehaviour
 {
     [SerializeField] private GameObject[] spawnplants;
-    private Map_Matrix mapMatrix;
+     private Map_Matrix mapMatrix;
     [SerializeField] private TreeScriptableObject Stree;
 
     private DayNight dayNight;
