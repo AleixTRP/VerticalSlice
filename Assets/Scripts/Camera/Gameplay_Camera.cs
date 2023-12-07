@@ -9,14 +9,18 @@ public class Gameplay_Camera : MonoBehaviour
     [SerializeField] private float targetDistance;
     [SerializeField] private float cameraLerp; //12f
 
-  
-
     private Vector2 GetCamera;
 
     private RaycastHit hit;
 
+
+    private void Start()
+    {
+        Audio_Manager.instance.Play("MenuSound");
+    }
     private void LateUpdate()
     {
+       
         if (!MenuPause.GamePaused) // Verifica si el juego no está pausado
         {
             GetCamera += Input_Manager._INPUT_MANAGER.GetCameraValue();
@@ -33,4 +37,6 @@ public class Gameplay_Camera : MonoBehaviour
             }
         }
     }
+
+   
 }

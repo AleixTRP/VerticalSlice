@@ -1,36 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public class Sound
+{
+    public string name;
+    public AudioClip clip;
+
+    [Range(0f, 1f)]
+    public float volume = 1f;
+    [Range(0.1f, 3f)]
+    public float pitch = 1f;
+
+    public bool loop = false; // Nuevo campo para indicar si el sonido debe reproducirse en bucle.
+
+    [HideInInspector]
+    public AudioSource source;
+}
 
 public class Audio_Manager : MonoBehaviour
 {
-    public static Audio_Manager instance; 
-    public AudioSource soundSource; // Fuente de audio para efectos de sonido
-    public AudioSource musicSource; // Fuente de audio para la música de ambiente
+    public static Audio_Manager instance;
+
+    public Sound[] sounds;
 
     void Awake()
     {
-        // Configura el Singleton
         if (instance == null)
-        {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
         else
         {
             Destroy(gameObject);
+            return;
         }
-    }
 
-    public void PlayClickSound(AudioClip clickSound = null)
-    {
-        // Reproduce el sonido del clic del botón
-        if (clickSound != null)
+        DontDestroyOnLoad(gameObject);
+
+        foreach (Sound sound in sounds)
         {
-            soundSource.clip = clickSound;
-            soundSource.Play();
+            sound.source = gameObject.AddComponent<AudioSource>();
+            sound.source.clip = sound.clip;
+            sound.source.volume = sound.volume;
+            sound.source.pitch = sound.pitch;
+            sound.source.loop = sound.loop; // Configura si el sonido debe reproducirse en bucle.
         }
     }
 
-    // Puedes agregar más funciones para reproducir diferentes sonidos según sea necesario
+    public void Play(string name)
+    {
+        Sound sound = System.Array.Find(sounds, s => s.name == name);
+        if (sound == null)
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+
+        sound.source.Play();
+    }
+
+   
 }

@@ -27,6 +27,7 @@ public class PlantTree : MonoBehaviour
     {
         if (Input_Manager._INPUT_MANAGER.GetButtonPlant() && !animator.GetBool("plant"))
         {
+            
             StartCoroutine(PlantTreeWithAnimation());
         }
     }
@@ -36,6 +37,8 @@ public class PlantTree : MonoBehaviour
          
         tool.SetActive(false); 
         animator.SetBool("plant", true);
+        Audio_Manager.instance.Play("SpellPlant");
+   
 
         // Espera hasta que la animación termine
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);

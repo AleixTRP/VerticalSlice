@@ -19,7 +19,10 @@ public class InitialMenu : MonoBehaviour
     public void EjecutarAccionBoton()
     {
         // Cambia a la escena especificada
+       
         SceneManager.LoadScene("Lvl2");
+       
+
 
     }
 }

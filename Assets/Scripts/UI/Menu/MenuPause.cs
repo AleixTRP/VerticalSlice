@@ -33,6 +33,7 @@ public class MenuPause : MonoBehaviour
 
     public void QuitToMainMenu()
     {
+        GamePaused = false;
         //Time.timeScale = 1f; // Asegúrate de restablecer el tiempo a su valor normal al cargar el menú principal
         SceneManager.LoadScene("InitialMenu");
     }

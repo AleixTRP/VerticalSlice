@@ -14,13 +14,17 @@ public class Character_Controller : MonoBehaviour
     [SerializeField] private float gravity = 9.8f;
     [SerializeField] private GameObject cam;
     [SerializeField] private Animator animator;
+   
 
     private void Awake()
     {
+        
         controller = GetComponent<CharacterController>();
         controller.enableOverlapRecovery = true; // Habilitar recuperación de solapamiento
     }
 
+
+  
     private void Update()
     {
         // Obtener la entrada de movimiento

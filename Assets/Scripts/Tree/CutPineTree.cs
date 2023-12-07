@@ -107,7 +107,7 @@ public class CutPineTree : MonoBehaviour
 
         // Inicia la animación
         animator.SetBool("cut", true);
-
+       
 
 
         // Espera hasta que la animación esté completa
@@ -117,4 +117,5 @@ public class CutPineTree : MonoBehaviour
         animator.SetBool("cut", false);
         isCuttingAnimationPlaying = false;
     }
+ 
 }
