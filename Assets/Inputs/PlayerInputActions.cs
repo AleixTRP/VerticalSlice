@@ -62,6 +62,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""20570dea-926f-4fef-a36f-3ca9f38a52df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""54e22cd3-6d2f-4434-9ae3-0fb4e3df9a02"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""adf0aa48-b79b-4dcc-ab8a-36ae2875dfdd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,6 +201,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Cut"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6ba028d-19aa-446e-a14d-216319127a74"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""726266fb-00dd-489c-8941-79752bd812d8"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6b7c19f-1e15-4572-b617-c06135c0e017"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +246,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Character_Camera = m_Character.FindAction("Camera", throwIfNotFound: true);
         m_Character_Grow = m_Character.FindAction("Grow", throwIfNotFound: true);
         m_Character_Cut = m_Character.FindAction("Cut", throwIfNotFound: true);
+        m_Character_RightClick = m_Character.FindAction("RightClick", throwIfNotFound: true);
+        m_Character_LeftClick = m_Character.FindAction("LeftClick", throwIfNotFound: true);
+        m_Character_Esc = m_Character.FindAction("Esc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +314,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Camera;
     private readonly InputAction m_Character_Grow;
     private readonly InputAction m_Character_Cut;
+    private readonly InputAction m_Character_RightClick;
+    private readonly InputAction m_Character_LeftClick;
+    private readonly InputAction m_Character_Esc;
     public struct CharacterActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -259,6 +325,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Camera => m_Wrapper.m_Character_Camera;
         public InputAction @Grow => m_Wrapper.m_Character_Grow;
         public InputAction @Cut => m_Wrapper.m_Character_Cut;
+        public InputAction @RightClick => m_Wrapper.m_Character_RightClick;
+        public InputAction @LeftClick => m_Wrapper.m_Character_LeftClick;
+        public InputAction @Esc => m_Wrapper.m_Character_Esc;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -280,6 +349,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Cut.started += instance.OnCut;
             @Cut.performed += instance.OnCut;
             @Cut.canceled += instance.OnCut;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
+            @LeftClick.started += instance.OnLeftClick;
+            @LeftClick.performed += instance.OnLeftClick;
+            @LeftClick.canceled += instance.OnLeftClick;
+            @Esc.started += instance.OnEsc;
+            @Esc.performed += instance.OnEsc;
+            @Esc.canceled += instance.OnEsc;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -296,6 +374,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Cut.started -= instance.OnCut;
             @Cut.performed -= instance.OnCut;
             @Cut.canceled -= instance.OnCut;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
+            @LeftClick.started -= instance.OnLeftClick;
+            @LeftClick.performed -= instance.OnLeftClick;
+            @LeftClick.canceled -= instance.OnLeftClick;
+            @Esc.started -= instance.OnEsc;
+            @Esc.performed -= instance.OnEsc;
+            @Esc.canceled -= instance.OnEsc;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -319,5 +406,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCamera(InputAction.CallbackContext context);
         void OnGrow(InputAction.CallbackContext context);
         void OnCut(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
 }

@@ -17,6 +17,12 @@ public class Input_Manager : MonoBehaviour
     private float buttonPlant = 0f;
 
     private float buttonCut = 0f;
+   
+    private float rightClick = 0f;
+    
+    private float leftClick = 0f;
+   
+    private float escButton = 0f;
 
     
 
@@ -35,6 +41,9 @@ public class Input_Manager : MonoBehaviour
             playerInputs.Character.Camera.performed += CameraMovement;
             playerInputs.Character.Grow.performed += GrowButtonPlant;
             playerInputs.Character.Cut.performed += CutButtonAction;
+            playerInputs.Character.RightClick.performed += RightClickButton;
+            playerInputs.Character.LeftClick.performed += LeftClickButton;
+            playerInputs.Character.Esc.performed += EscButton;
         
             _INPUT_MANAGER = this;
             DontDestroyOnLoad(this);
@@ -47,6 +56,13 @@ public class Input_Manager : MonoBehaviour
         buttonPlant += Time.deltaTime;
 
         buttonCut += Time.deltaTime;
+
+        leftClick += Time.deltaTime;
+       
+        rightClick += Time.deltaTime;
+        
+        escButton += Time.deltaTime;
+
 
         InputSystem.Update();
 
@@ -106,6 +122,42 @@ public class Input_Manager : MonoBehaviour
     {
         return this.cam;
     }
+    private void RightClickButton(InputAction.CallbackContext context)
+    {
 
-  
+        rightClick = 0f;
+    }
+
+    //Button
+    public bool GetRightClick()
+    {
+        return this.rightClick == 0f;
+    }
+
+    private void LeftClickButton(InputAction.CallbackContext context)
+    {
+
+        leftClick = 0f;
+    }
+
+    //Button
+    public bool GetLeftClick()
+    {
+        return this.leftClick == 0f;
+    }
+
+    private void EscButton(InputAction.CallbackContext context)
+    {
+
+        escButton = 0f;
+    }
+
+    //Button
+    public bool GetEscButton()
+    {
+        return this.escButton == 0f;
+    }
+
+
+
 }
