@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,8 +22,9 @@ public class Character_Controller : MonoBehaviour
         controller.enableOverlapRecovery = true; // Habilitar recuperación de solapamiento
     }
 
+ 
 
-  
+
     private void Update()
     {
         // Obtener la entrada de movimiento

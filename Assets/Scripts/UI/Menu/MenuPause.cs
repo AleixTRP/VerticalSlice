@@ -7,6 +7,7 @@ public class MenuPause : MonoBehaviour
 {
     public static bool GamePaused = false;
     [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject optionMenu;
 
     void Update()
     {
@@ -14,6 +15,7 @@ public class MenuPause : MonoBehaviour
         {
             
                 Pause();
+            optionMenu.SetActive(false);
         }
     }
 
@@ -31,10 +33,27 @@ public class MenuPause : MonoBehaviour
         GamePaused = false;
     }
 
-    public void QuitToMainMenu()
+    public void quitToMainMenu()
     {
         GamePaused = false;
         //Time.timeScale = 1f; // Asegúrate de restablecer el tiempo a su valor normal al cargar el menú principal
         SceneManager.LoadScene("InitialMenu");
     }
+
+    public void exitGame()
+    {
+        Application.Quit();
+    }
+
+    public void menuOptions()
+    {
+        optionMenu.SetActive(true);
+    }
+
+    public void optionsBack()
+    {
+        optionMenu.SetActive(false);
+    }
+
+
 }
