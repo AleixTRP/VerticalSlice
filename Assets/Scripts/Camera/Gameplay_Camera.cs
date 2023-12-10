@@ -16,7 +16,7 @@ public class Gameplay_Camera : MonoBehaviour
 
     private void Start()
     {
-        Audio_Manager.instance.Play("MenuSound");
+        Audio_Manager.instance.Play("MenuSound", transform.position);
     }
     private void LateUpdate()
     {

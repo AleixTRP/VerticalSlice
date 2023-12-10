@@ -11,7 +11,7 @@ public class Sound
     [Range(0.1f, 3f)]
     public float pitch = 1f;
 
-    public bool loop = false; // Nuevo campo para indicar si el sonido debe reproducirse en bucle.
+    public bool loop = false;
 
     [HideInInspector]
     public AudioSource source;
@@ -41,11 +41,16 @@ public class Audio_Manager : MonoBehaviour
             sound.source.clip = sound.clip;
             sound.source.volume = sound.volume;
             sound.source.pitch = sound.pitch;
-            sound.source.loop = sound.loop; // Configura si el sonido debe reproducirse en bucle.
+            sound.source.loop = sound.loop;
+
+            // Configuración para audio espacial
+            sound.source.spatialBlend = 1f; // 1f indica audio completamente espacializado
+            sound.source.minDistance = 1f; // Distancia mínima de audición
+            sound.source.maxDistance = 10f; // Distancia máxima de audición
         }
     }
 
-    public void Play(string name)
+    public void Play(string name, Vector3 position)
     {
         Sound sound = System.Array.Find(sounds, s => s.name == name);
         if (sound == null)
@@ -54,8 +59,22 @@ public class Audio_Manager : MonoBehaviour
             return;
         }
 
+        // Configurar la posición del sonido en el espacio
+        sound.source.transform.position = position;
+
         sound.source.Play();
     }
 
-   
+    public void UpdateSoundPosition(string name, Vector3 newPosition)
+    {
+        Sound sound = System.Array.Find(sounds, s => s.name == name);
+        if (sound != null)
+        {
+            sound.source.transform.position = newPosition;
+        }
+        else
+        {
+            Debug.LogWarning("Sound: " + name + " not found!");
+        }
+    }
 }

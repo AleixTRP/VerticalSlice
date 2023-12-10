@@ -37,7 +37,7 @@ public class PlantTree : MonoBehaviour
          
         tool.SetActive(false); 
         animator.SetBool("plant", true);
-        Audio_Manager.instance.Play("SpellPlant");
+        Audio_Manager.instance.Play("SpellPlant", transform.position);
    
 
         // Espera hasta que la animación termine
