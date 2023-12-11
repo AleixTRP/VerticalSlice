@@ -6,6 +6,6 @@ public class EventAxeHit : MonoBehaviour
 {
     public void AxeHit()
     {
-        Audio_Manager.instance.Play("AxeHit", transform.position);
+        Audio_Manager.instance.Play("AxeHit");
     }
 }

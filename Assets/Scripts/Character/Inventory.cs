@@ -93,6 +93,7 @@ public class Inventory : MonoBehaviour
         // Verifica si el objeto en el suelo es interactuable y si el inventario no está lleno
         if (other.CompareTag("SmallPine") && !IsInventoryFull)
         {
+            Audio_Manager.instance.Play("TakeItem");
             // Agrega el objeto al inventario cuando el jugador pasa por encima
             AddToInventory(other.gameObject);
         }

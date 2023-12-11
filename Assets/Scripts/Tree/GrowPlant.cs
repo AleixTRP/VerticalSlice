@@ -17,10 +17,7 @@ public class GrowPlant : MonoBehaviour
     {
         mapMatrix = FindObjectOfType<Map_Matrix>();
 
-        if (mapMatrix == null)
-        {
-            Debug.LogError("No se pudo encontrar un objeto Map_Matrix en la escena.");
-        }
+      
         dayNight = FindObjectOfType<DayNight>();
     }
 

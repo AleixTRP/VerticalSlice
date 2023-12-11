@@ -6,30 +6,21 @@ public class CutPineTree : MonoBehaviour
     private bool canHit;
     private bool hasTouchedThisFrame;
     private bool isCuttingAnimationPlaying;
+    private bool cutButtonPressed;
 
     [SerializeField] private TreeScriptableObject Stree;
-
     private float treelife;
-
-    [SerializeField]
-    private GameObject gm;
-
-    [SerializeField]
-    private GameObject smallPinePrefab;
-
+    [SerializeField] private GameObject gm;
+    [SerializeField] private GameObject smallPinePrefab;
     private Inventory playerInventory;
-
-    [SerializeField]
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     private void Start()
     {
-
         treelife = Stree.hitTree;
         gm = transform.parent.gameObject;
-
         isCuttingAnimationPlaying = false;
-
+        cutButtonPressed = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,13 +32,11 @@ public class CutPineTree : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("SmallPine") && canHit)
         {
-            // El jugador pasó por encima del árbol pequeño, agregar al inventario y destruirlo
             playerInventory = other.GetComponent<Inventory>();
             if (playerInventory != null)
             {
                 playerInventory.AddToInventory(other.gameObject);
             }
-
             Destroy(other.gameObject);
         }
     }
@@ -67,55 +56,55 @@ public class CutPineTree : MonoBehaviour
 
         if (canHit && !hasTouchedThisFrame)
         {
+            if (Input_Manager._INPUT_MANAGER.GetButtonCut())
+            {
+                cutButtonPressed = true;
+            }
 
-            if (Input_Manager._INPUT_MANAGER.GetButtonCut() && treelife > 0 && !isCuttingAnimationPlaying)
+            if (cutButtonPressed && treelife > 0 && !isCuttingAnimationPlaying)
             {
                 Debug.Log("Entra en la animación de Talar");
 
-                // Inicia la animación de corte
-                StartCoroutine(PlayCuttingAnimation());
+                // Check if the animation is not already playing
+                if (!isCuttingAnimationPlaying)
+                {
+                    StartCoroutine(PlayCuttingAnimation());
+                }
 
-
-                // Reduce la vida del árbol
                 treelife--;
                 hasTouchedThisFrame = true;
-
-                if (treelife <= 0)
-                {
-
-                    Debug.Log("Destruir");
-                    animator.SetBool("cut", false);
-
-                    if (Random.value < Stree.luckyTree && smallPinePrefab != null)
-                    {
-                        Debug.Log("ArbolSpawn");
-                        // Instanciar el árbol pequeño en la escena
-                        GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
-                    }
-
-                    // Destruir el objeto padre (árbol completo)
-                    Destroy(gm);
-                }
             }
         }
     }
 
     private IEnumerator PlayCuttingAnimation()
     {
-        // Marca la animación como en reproducción
         isCuttingAnimationPlaying = true;
-
-        // Inicia la animación
         animator.SetBool("cut", true);
-       
 
-
-        // Espera hasta que la animación esté completa
+        // Wait until the animation is complete
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
-        // Marca la animación como finalizada
         animator.SetBool("cut", false);
         isCuttingAnimationPlaying = false;
+
+        // Check if there is still life left in the tree
+        if (treelife > 0)
+        {
+            // Reset the cutButtonPressed flag to allow triggering the animation again
+            cutButtonPressed = false;
+        }
+        else
+        {
+            // Perform destruction logic after the last animation
+            if (Random.value < Stree.luckyTree && smallPinePrefab != null)
+            {
+                Debug.Log("ArbolSpawn");
+                GameObject smallTreeInstance = Instantiate(smallPinePrefab, gm.transform.position, gm.transform.rotation);
+            }
+            Audio_Manager.instance.Play("TreeFall");
+
+            Destroy(gm);
+        }
     }
- 
 }
