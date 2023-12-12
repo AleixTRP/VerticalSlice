@@ -6,7 +6,7 @@ public class Tutorial_txt : MonoBehaviour
 {
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject[] objetosFlotantes;
-    [SerializeField] private float tiempoEntreObjetos = 2f; // Tiempo en segundos entre objetos
+    [SerializeField] private float tiempoEntreObjetos = 10f; // Tiempo en segundos entre objetos
 
     private int currentIndex = 0;
     private bool todosObjetosMostrados = false;

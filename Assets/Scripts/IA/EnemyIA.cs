@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyIA : MonoBehaviour
 {
@@ -8,10 +9,14 @@ public class EnemyIA : MonoBehaviour
     private float moveSpeed = 5f;
     private float damageToMotherTree = 1f;  // Definir la variable para el daño al árbol madre
     private float attackDistance = 2f;      // Definir la variable para la distancia de ataque
+    [SerializeField] private Animator animator;
+    [SerializeField] private NavMeshAgent agent;
 
     void Start()
     {
         motherTree = FindObjectOfType<MotherTree>();
+        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -30,6 +35,7 @@ public class EnemyIA : MonoBehaviour
     {
         Vector3 direction = (motherTree.transform.position - transform.position).normalized;
         transform.Translate(direction * moveSpeed * Time.deltaTime);
+        animator.SetFloat("Run", agent.velocity.magnitude);
     }
 
     void AttackMotherTree()

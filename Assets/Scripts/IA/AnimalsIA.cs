@@ -9,6 +9,8 @@ public class AnimalsIA : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private NavMeshAgent agent;
 
+    private GameObject enemy;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -22,37 +24,25 @@ public class AnimalsIA : MonoBehaviour
     {
         while (true)
         {
-            // Calcula una nueva posición aleatoria en el NavMesh
-            Vector3 randomPosition = GetRandomPositionOnNavMesh();
+            // Busca el GameObject del enemigo en la escena
+            enemy = GameObject.FindGameObjectWithTag("Enemy");
 
-            // Establece la posición como destino para la IA
-            agent.SetDestination(randomPosition);
-
-            // Espera hasta que la IA llegue al destino antes de calcular la siguiente ruta
-            yield return new WaitUntil(() => agent.remainingDistance < 0.1f);
+            if (enemy != null)
+            {
+                // Mueve hacia la posición del enemigo y lo sigue
+                MoveTowardsEnemy();
+            }
 
             // Pequeño tiempo de espera antes de calcular la siguiente ruta
             yield return new WaitForSeconds(1.0f);
         }
     }
 
-    private Vector3 GetRandomPositionOnNavMesh()
+    private void MoveTowardsEnemy()
     {
-        // Genera una posición aleatoria dentro del NavMesh
-        NavMeshHit hit;
-        Vector3 randomPosition = Vector3.zero;
+        // Si hay un enemigo, mueve hacia él y lo sigue
+        agent.SetDestination(enemy.transform.position);
 
-        // Try to find a point on the NavMesh within a certain radius
-        if (NavMesh.SamplePosition(transform.position + Random.onUnitSphere * 10f, out hit, 10f, NavMesh.AllAreas))
-        {
-            randomPosition = hit.position;
-        }
-
-        return randomPosition;
-    }
-
-    private void Update()
-    {
         // Actualiza el parámetro de animación "Run" en función de si la IA está en movimiento
         animator.SetFloat("Run", agent.velocity.magnitude);
     }

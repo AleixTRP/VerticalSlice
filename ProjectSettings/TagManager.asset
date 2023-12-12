@@ -11,6 +11,7 @@ TagManager:
   - SmallPine
   - Matrix
   - SmallOak
+  - Enemy
   layers:
   - Default
   - TransparentFX
