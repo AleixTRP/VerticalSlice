@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a60b55502f8cf9e43852f39a52ac234e, type: 2}
+  - {fileID: 2100000, guid: eb593be52119d734ab7a422019b948d1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Stree: {fileID: 0}
-  maxLife: 10
   gm: {fileID: 1983694637467298}
   smallPinePrefab: {fileID: 142018, guid: d537224908c5f444f86c9e57e0c7234c, type: 3}
   animator: {fileID: 0}

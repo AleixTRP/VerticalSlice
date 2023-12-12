@@ -14,38 +14,40 @@ public class AnimalsIA : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        // Inicia la rutina de movimiento
-        StartCoroutine(MoverPorElMapa());
+        // Inicia la rutina de movimiento a lo largo del NavMesh
+        StartCoroutine(MoverPorElNavMesh());
     }
 
-    private IEnumerator MoverPorElMapa()
+    private IEnumerator MoverPorElNavMesh()
     {
         while (true)
         {
-            // Calcula una nueva posición aleatoria en el mapa
-            Vector3 randomPosition = GetRandomPositionOnMap();
+            // Calcula una nueva posición aleatoria en el NavMesh
+            Vector3 randomPosition = GetRandomPositionOnNavMesh();
 
-            // Calcula la ruta hacia la nueva posición
-            NavMeshPath path = new NavMeshPath();
-            agent.CalculatePath(randomPosition, path);
+            // Establece la posición como destino para la IA
+            agent.SetDestination(randomPosition);
 
-            // Establece la ruta para la IA
-            agent.SetPath(path);
-
-            // Espera hasta que la IA llegue a la posición antes de calcular la siguiente ruta
+            // Espera hasta que la IA llegue al destino antes de calcular la siguiente ruta
             yield return new WaitUntil(() => agent.remainingDistance < 0.1f);
 
             // Pequeño tiempo de espera antes de calcular la siguiente ruta
             yield return new WaitForSeconds(1.0f);
-
-            yield return null;
         }
     }
 
-    private Vector3 GetRandomPositionOnMap()
+    private Vector3 GetRandomPositionOnNavMesh()
     {
-        // Genera una posición aleatoria dentro de un área grande del mapa
-        Vector3 randomPosition = new Vector3(Random.Range(-50f, 50f), 0f, Random.Range(-50f, 50f));
+        // Genera una posición aleatoria dentro del NavMesh
+        NavMeshHit hit;
+        Vector3 randomPosition = Vector3.zero;
+
+        // Try to find a point on the NavMesh within a certain radius
+        if (NavMesh.SamplePosition(transform.position + Random.onUnitSphere * 10f, out hit, 10f, NavMesh.AllAreas))
+        {
+            randomPosition = hit.position;
+        }
+
         return randomPosition;
     }
 

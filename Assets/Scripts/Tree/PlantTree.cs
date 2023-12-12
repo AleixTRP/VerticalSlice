@@ -15,7 +15,8 @@ public class PlantTree : MonoBehaviour
     private GameObject tool;
 
     [SerializeField]
-    private ParticleSystem particleSystem;    
+    private ParticleSystem particleSystem;
+
 
     void Start()
     {

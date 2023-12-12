@@ -13,6 +13,6 @@ public class UI_Inventory : MonoBehaviour
     void Update()
     {
         // Actualizar el Texto de la UI con información del inventario
-        inventoryText.text = "Inventario: " + Inventory.Instance.InventoryCount + " / " + "10";
+        inventoryText.text =  Inventory.Instance.InventoryCount.ToString();
     }
 }

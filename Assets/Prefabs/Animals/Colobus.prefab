@@ -702,9 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bb7bf458833551459d183c03cda705e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Stree: {fileID: 11400000, guid: efa21f6f471ca434c89dcb9353b10503, type: 2}
-  distanciaCircunferencia: 2
-  velocidadRotacion: 20
+  velocidadMovimiento: 5
   animator: {fileID: 8317233869622344689}
   agent: {fileID: -3106363131132766378}
 --- !u!82 &6482400709401519272
@@ -717,7 +715,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1cea6cbe824584342b490517f45fc397, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1733fae108d9c174e9288f07d6288d47, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.203
   m_Pitch: 1

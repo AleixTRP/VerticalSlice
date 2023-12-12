@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
   m_Name: S_AdleTree
   m_EditorClassIdentifier: 
-  growthSpeed: 10
+  growthSpeed: 120
   luckyTree: 1
-  hitTree: 3
-  dayMultiplier: 1
-  nightMultiplier: 0.5
+  hitTree: 5
+  dayMultiplier: 2
+  nightMultiplier: 1
   gameObject: {fileID: 142018, guid: ca5fec8310665244fb6c139267ea2a74, type: 3}
   name: Adle
   animalPrefab: {fileID: 5279811246306103102, guid: 252ba5fa5d8167e42af72cf97baa830e, type: 3}
   treeTransform: {fileID: 423888, guid: d537224908c5f444f86c9e57e0c7234c, type: 3}
-  lifeToMotherTree: 100
+  lifeToMotherTree: 50

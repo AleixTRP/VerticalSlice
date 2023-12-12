@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
   m_Name: S_AshTree
   m_EditorClassIdentifier: 
-  growthSpeed: 10
+  growthSpeed: 120
   luckyTree: 1
   hitTree: 4
-  dayMultiplier: 1
-  nightMultiplier: 0.5
+  dayMultiplier: 0.5
+  nightMultiplier: 1
   gameObject: {fileID: 127550, guid: 5445c7553f255cd459493ab038b0e8bd, type: 3}
   name: Ash
   animalPrefab: {fileID: 6182162820492919152, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
   treeTransform: {fileID: 438322, guid: 87a6cef862ce2cb4a88c5ca5d5af5d2b, type: 3}
-  lifeToMotherTree: 300
+  lifeToMotherTree: 20

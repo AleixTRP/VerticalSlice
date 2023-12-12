@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.SceneManagement;
 
 public class MenuPause : MonoBehaviour
@@ -8,7 +9,9 @@ public class MenuPause : MonoBehaviour
     public static bool GamePaused = false;
     [SerializeField] private GameObject pauseMenuUI;
     [SerializeField] private GameObject optionMenu;
+    [SerializeField] private Character_Controller pausePlayer;
 
+ 
     void Update()
     {
         if (Input_Manager._INPUT_MANAGER.GetEscButton())
@@ -17,20 +20,26 @@ public class MenuPause : MonoBehaviour
              Pause();
             optionMenu.SetActive(false);
         }
+     
     }
+
 
     public void Pause()
     {
+        pausePlayer.GetComponent<Character_Controller>().enabled = false;
         pauseMenuUI.SetActive(true);
         //Time.timeScale = 0f; // Pausa el juego
         GamePaused = true;
+      
+
     }
 
     public void Resume()
     {
+        pausePlayer.GetComponent<Character_Controller>().enabled = true;
         pauseMenuUI.SetActive(false);
-        //Time.timeScale = 1f; // Reanuda el juego
         GamePaused = false;
+
     }
 
     public void quitToMainMenu()

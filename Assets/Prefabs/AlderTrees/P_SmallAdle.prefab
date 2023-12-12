@@ -146,5 +146,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fb84880610a8447b4b38de7ed10e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnplants: []
+  spawnplants:
+  - {fileID: 2594766243793620232, guid: 4d1f930728eb81f499eefd1f6d4db221, type: 3}
+  - {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
+  - {fileID: 2831074819202018473, guid: 221bd8eee906efe489a9f1c8aad0ec09, type: 3}
+  - {fileID: 8915715655105720591, guid: 5693a57c90ef40744848833e4aa5eff8, type: 3}
+  - {fileID: 6463103279978565845, guid: 87b04a6b131597e4db952f9810390439, type: 3}
+  - {fileID: 8407946972163363549, guid: 92101ed146e7f434cb43a3680c518e75, type: 3}
+  - {fileID: 1207449177372228529, guid: 46ca9bca5d4d6824c9973375d741a3df, type: 3}
+  - {fileID: 902912374606792013, guid: 8c1162e29ab5baf45ad76ebc6e86889b, type: 3}
+  - {fileID: 2594766243793620232, guid: 4d1f930728eb81f499eefd1f6d4db221, type: 3}
+  - {fileID: 2464754855653894261, guid: d7375139d18121f4daae96053a84e4c9, type: 3}
   Stree: {fileID: 11400000, guid: 09f721ed25bf166428be92730f9cd420, type: 2}
