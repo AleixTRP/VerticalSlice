@@ -21,4 +21,4 @@ MonoBehaviour:
   name: Ash
   animalPrefab: {fileID: 6182162820492919152, guid: 84b7c8441f160174fa5c6f94cf397f0a, type: 3}
   treeTransform: {fileID: 438322, guid: 87a6cef862ce2cb4a88c5ca5d5af5d2b, type: 3}
-  lifeToMotherTree: 100
+  lifeToMotherTree: 300

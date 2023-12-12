@@ -5,9 +5,7 @@ using UnityEngine.AI;
 
 public class AnimalsIA : MonoBehaviour
 {
-    [SerializeField] private TreeScriptableObject Stree;  // Referencia al árbol
-    [SerializeField] private float distanciaCircunferencia = 2f;  // Distancia desde el árbol
-    [SerializeField] private float velocidadRotacion = 20f;  // Velocidad de rotación
+    [SerializeField] private float velocidadMovimiento = 5f;  // Velocidad de movimiento
     [SerializeField] private Animator animator;
     [SerializeField] private NavMeshAgent agent;
 
@@ -16,22 +14,20 @@ public class AnimalsIA : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        // Inicia la rotación alrededor del árbol
-        StartCoroutine(RotarAlrededorArbol());
+        // Inicia la rutina de movimiento
+        StartCoroutine(MoverPorElMapa());
     }
 
-    private IEnumerator RotarAlrededorArbol()
+    private IEnumerator MoverPorElMapa()
     {
         while (true)
         {
-            // Calcula la nueva posición en la circunferencia alrededor del árbol
-            float angle = Time.time * velocidadRotacion;
-            Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distanciaCircunferencia;
-            Vector3 targetPosition = Stree.treeTransform.position + offset;
+            // Calcula una nueva posición aleatoria en el mapa
+            Vector3 randomPosition = GetRandomPositionOnMap();
 
             // Calcula la ruta hacia la nueva posición
             NavMeshPath path = new NavMeshPath();
-            agent.CalculatePath(targetPosition, path);
+            agent.CalculatePath(randomPosition, path);
 
             // Establece la ruta para la IA
             agent.SetPath(path);
@@ -40,10 +36,17 @@ public class AnimalsIA : MonoBehaviour
             yield return new WaitUntil(() => agent.remainingDistance < 0.1f);
 
             // Pequeño tiempo de espera antes de calcular la siguiente ruta
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(1.0f);
 
             yield return null;
         }
+    }
+
+    private Vector3 GetRandomPositionOnMap()
+    {
+        // Genera una posición aleatoria dentro de un área grande del mapa
+        Vector3 randomPosition = new Vector3(Random.Range(-50f, 50f), 0f, Random.Range(-50f, 50f));
+        return randomPosition;
     }
 
     private void Update()

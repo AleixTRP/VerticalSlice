@@ -135,6 +135,7 @@ public class GrowPlant : MonoBehaviour
         }
 
         SpawnAnimal();
+        Audio_Manager.instance.Play("TreeReady");
     }
 
     void SpawnAnimal()

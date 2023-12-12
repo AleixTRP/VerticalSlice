@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MotherTree : MonoBehaviour
 {
-    public float maxLife = 100f; // Vida máxima del árbol madre
+    [SerializeField] private float maxLife = 100f; // Vida máxima del árbol madre
     private float currentLife;   // Vida actual del árbol madre
-    [SerializeField] private GameObject menu;
+    [SerializeField] private string lvls;
   
 
     private void Start()
@@ -32,7 +32,7 @@ public class MotherTree : MonoBehaviour
             // Implementa la lógica de victoria del nivel
             Debug.Log("¡Has ganado el nivel!");
 
-           menu.SetActive(true);
+            SceneManager.LoadScene(lvls);
           
 
         }

@@ -5,15 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class WinMenu : MonoBehaviour
 {
-    public static bool GamePaused = false;
+    private static bool GamePaused = false;
 
-    private void Start()
-    {
-        Audio_Manager.instance.Play("Win");
-    }
+    // Nombre de la escena a cargar, puedes establecerlo desde el Inspector
+    [SerializeField] private string nextSceneName = "Lvl2";
+
+
+
     public void NextLvl()
     {
-        SceneManager.LoadScene("Lvl1");
+        // Cargar la escena utilizando el nombre almacenado en la variable nextSceneName
+        SceneManager.LoadScene(nextSceneName);
     }
 
     public void quitToMainMenu()
@@ -27,6 +29,4 @@ public class WinMenu : MonoBehaviour
     {
         Application.Quit();
     }
-
-
 }

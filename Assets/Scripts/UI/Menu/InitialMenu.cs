@@ -24,7 +24,7 @@ public class InitialMenu : MonoBehaviour
     {
         // Cambia a la escena especificada
        
-        SceneManager.LoadScene("Lvl2");
+        SceneManager.LoadScene("Lvl1");
        
 
 
