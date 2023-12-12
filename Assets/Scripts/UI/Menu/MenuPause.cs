@@ -27,6 +27,8 @@ public class MenuPause : MonoBehaviour
     public void Pause()
     {
         pausePlayer.GetComponent<Character_Controller>().enabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
         //Time.timeScale = 0f; // Pausa el juego
         GamePaused = true;
@@ -37,6 +39,7 @@ public class MenuPause : MonoBehaviour
     public void Resume()
     {
         pausePlayer.GetComponent<Character_Controller>().enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
         pauseMenuUI.SetActive(false);
         GamePaused = false;
 

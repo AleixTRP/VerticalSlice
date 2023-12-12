@@ -15,6 +15,7 @@ public class Gameplay_Camera : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Audio_Manager.instance.Play("MenuSound");
     }
 
