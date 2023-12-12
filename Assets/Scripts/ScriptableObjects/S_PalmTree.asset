@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
   m_Name: S_PalmTree
   m_EditorClassIdentifier: 
-  growthSpeed: 160
+  growthSpeed: 10
   luckyTree: 1
   hitTree: 3
   dayMultiplier: 1
   nightMultiplier: 0.5
   gameObject: {fileID: 176278, guid: 5dda8c3f9f0b20e4298ec2afb806069f, type: 3}
   name: Palm
+  animalPrefab: {fileID: 6842458599697738422, guid: cefda5744f2acb54d8f08973a10bee1e, type: 3}
+  treeTransform: {fileID: 476400, guid: 3c74caa0496b18d4ba0a1009ebb4c992, type: 3}
+  lifeToMotherTree: 10

@@ -6,18 +6,15 @@ using UnityEngine;
 public class GrowPlant : MonoBehaviour
 {
     [SerializeField] private GameObject[] spawnplants;
-     private Map_Matrix mapMatrix;
+    private Map_Matrix mapMatrix;
     [SerializeField] private TreeScriptableObject Stree;
-
     private DayNight dayNight;
-
     private float multiplayerDay;
- 
+    private GameObject spawnedAnimal;  // Nueva variable para almacenar la instancia del animal
+
     void Start()
     {
         mapMatrix = FindObjectOfType<Map_Matrix>();
-
-      
         dayNight = FindObjectOfType<DayNight>();
     }
 
@@ -42,7 +39,6 @@ public class GrowPlant : MonoBehaviour
 
             Vector3 plantSpawnWorld = new Vector3(plantSpawnX + 1, 0f, plantSpawnZ + 1);
 
-            // Ajusta la altura de la posición para que esté en la superficie del terreno
             float terrainHeight = mapMatrix.terreno.SampleHeight(plantSpawnWorld);
             float terrainY = mapMatrix.terreno.GetPosition().y;
 
@@ -62,7 +58,6 @@ public class GrowPlant : MonoBehaviour
         return plantPositions;
     }
 
-
     Vector3 CalculateAveragePlantPosition(List<Vector3> plantPositions)
     {
         Vector3 averagePlantPosition = Vector3.zero;
@@ -79,7 +74,6 @@ public class GrowPlant : MonoBehaviour
 
     void AdjustTreeHeight(Vector3 averagePlantPosition)
     {
-        // Ajusta la altura de la posición del árbol para que esté en la superficie del terreno
         float terrainHeightTree = mapMatrix.terreno.SampleHeight(averagePlantPosition);
         float terrainYTree = mapMatrix.terreno.GetPosition().y;
 
@@ -92,7 +86,6 @@ public class GrowPlant : MonoBehaviour
             averagePlantPosition.y = terrainHeightTree;
         }
 
-        // Establece la posición del árbol en el promedio de las posiciones de las plantas
         transform.position = new Vector3(averagePlantPosition.x, transform.position.y, averagePlantPosition.z);
     }
 
@@ -123,12 +116,33 @@ public class GrowPlant : MonoBehaviour
 
             timeElapsed += Time.deltaTime * multiplayerDay;
             gameObject.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timeElapsed / Stree.growthSpeed);
-           
 
             yield return null;
         }
-      
-    }
-   
-}
 
+        // The tree is fully grown, so add life to the MotherTree
+        MotherTree motherTree = FindObjectOfType<MotherTree>();
+        if (motherTree != null)
+        {
+            motherTree.AddLife(Stree.lifeToMotherTree);
+
+            // Llamada para actualizar la UI
+            UI_MotherTree uiMotherTree = FindObjectOfType<UI_MotherTree>();
+            if (uiMotherTree != null)
+            {
+                uiMotherTree.UpdateLifeUI(motherTree.GetCurrentLife(), motherTree.GetMaxLife());
+            }
+        }
+
+        SpawnAnimal();
+    }
+
+    void SpawnAnimal()
+    {
+        if (gameObject != null && Stree.animalPrefab != null)
+        {
+            Vector3 animalSpawnPosition = gameObject.transform.position + new Vector3(2f, 0f, 0f);
+            spawnedAnimal = Instantiate(Stree.animalPrefab, animalSpawnPosition, Quaternion.identity);
+        }
+    }
+}

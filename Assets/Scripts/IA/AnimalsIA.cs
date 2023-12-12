@@ -5,66 +5,50 @@ using UnityEngine.AI;
 
 public class AnimalsIA : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> puntosDestino = new List<GameObject>();
-    [SerializeField] private float tiempoEspera = 10f;
-    [SerializeField] private float tiempoEsperaSonido = 3f;
-    [SerializeField] private NavMeshAgent agent;
-    private GameObject puntoDestinoActual;
-    private float tiempoActual = 0f;
+    [SerializeField] private TreeScriptableObject Stree;  // Referencia al árbol
+    [SerializeField] private float distanciaCircunferencia = 2f;  // Distancia desde el árbol
+    [SerializeField] private float velocidadRotacion = 20f;  // Velocidad de rotación
     [SerializeField] private Animator animator;
+    [SerializeField] private NavMeshAgent agent;
 
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
 
-        // Asegúrate de tener puntos de destino en la lista
-        if (puntosDestino.Count > 0)
+        // Inicia la rotación alrededor del árbol
+        StartCoroutine(RotarAlrededorArbol());
+    }
+
+    private IEnumerator RotarAlrededorArbol()
+    {
+        while (true)
         {
-            // Inicia el movimiento hacia un punto de destino aleatorio
-            SeleccionarNuevoDestinoAleatorio();
-        }
-        else
-        {
-            Debug.LogError("No hay puntos de destino configurados en la lista.");
+            // Calcula la nueva posición en la circunferencia alrededor del árbol
+            float angle = Time.time * velocidadRotacion;
+            Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distanciaCircunferencia;
+            Vector3 targetPosition = Stree.treeTransform.position + offset;
+
+            // Calcula la ruta hacia la nueva posición
+            NavMeshPath path = new NavMeshPath();
+            agent.CalculatePath(targetPosition, path);
+
+            // Establece la ruta para la IA
+            agent.SetPath(path);
+
+            // Espera hasta que la IA llegue a la posición antes de calcular la siguiente ruta
+            yield return new WaitUntil(() => agent.remainingDistance < 0.1f);
+
+            // Pequeño tiempo de espera antes de calcular la siguiente ruta
+            yield return new WaitForSeconds(0.5f);
+
+            yield return null;
         }
     }
 
-    void Update()
+    private void Update()
     {
-        // Si la IA llegó al destino, espera antes de moverse al siguiente
-        if (agent.remainingDistance < 0.1f)
-        {
-            tiempoActual += Time.deltaTime;
-
-            // Comprueba si es tiempo de detenerse y reproducir un sonido
-            if (tiempoActual >= tiempoEspera)
-            {
-                tiempoActual = 0f;
-               
-            }
-            // Si no es tiempo de detenerse, espera antes de seleccionar un nuevo destino
-            else if (tiempoActual >= tiempoEsperaSonido)
-            {
-                tiempoActual = 0f; // Reinicia el temporizador antes de seleccionar el nuevo destino
-                SeleccionarNuevoDestinoAleatorio();
-            }
-        }
-
         // Actualiza el parámetro de animación "Run" en función de si la IA está en movimiento
         animator.SetFloat("Run", agent.velocity.magnitude);
-
-     
     }
-
-    void SeleccionarNuevoDestinoAleatorio()
-    {
-        // Selecciona un punto de destino aleatorio de la lista
-        puntoDestinoActual = puntosDestino[Random.Range(0, puntosDestino.Count)];
-
-        // Establece el destino en el punto seleccionado
-        agent.SetDestination(puntoDestinoActual.transform.position);
-
-    }
-
 }

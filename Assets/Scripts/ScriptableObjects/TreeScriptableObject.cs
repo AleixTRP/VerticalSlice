@@ -13,5 +13,8 @@ public class TreeScriptableObject : ScriptableObject
     public float nightMultiplier = 0.5f;
     public GameObject gameObject;
     public string name;
+    public GameObject animalPrefab;
+    public Transform treeTransform;
+    public float lifeToMotherTree = 10f;
 
 }

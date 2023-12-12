@@ -16,7 +16,7 @@ public class InitialMenu : MonoBehaviour
     private void Start()
     {
         _menu.SetActive(true);
-      
+        Audio_Manager.instance.Stop("Win");
     }
 
  

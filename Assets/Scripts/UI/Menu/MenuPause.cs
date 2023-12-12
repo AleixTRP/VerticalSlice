@@ -14,7 +14,7 @@ public class MenuPause : MonoBehaviour
         if (Input_Manager._INPUT_MANAGER.GetEscButton())
         {
             
-                Pause();
+             Pause();
             optionMenu.SetActive(false);
         }
     }

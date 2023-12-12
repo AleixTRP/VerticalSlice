@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c957ebf10d0f0f49a26b61cbb4436dd, type: 3}
   m_Name: S_ElmTree
   m_EditorClassIdentifier: 
-  growthSpeed: 100
+  growthSpeed: 10
   luckyTree: 1
   hitTree: 3
   dayMultiplier: 0.1
   nightMultiplier: 4
   gameObject: {fileID: 1550140418629916, guid: c539d642b8256284ab1f5de327a08496, type: 3}
   name: Elm
+  animalPrefab: {fileID: 4950779065795438720, guid: 8cb75dc2fdd63734988b8358f1314d25, type: 3}
+  treeTransform: {fileID: 4156483648147698, guid: 3e07483cd9aa6a141bb9c8e2d2c2bdad, type: 3}
+  lifeToMotherTree: 10
