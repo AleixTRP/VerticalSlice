@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class UI_MotherTree : MonoBehaviour
 {
-    public TMP_Text currentLifeText;
-    public TMP_Text maxLifeText;
-    public Slider lifeSlider;
+
+   [SerializeField] private  Slider lifeSlider;
+    [SerializeField] private TMP_Text hourText; // Añade un objeto Text para mostrar la hora
+    [SerializeField] private DayNight dayNightCycle; 
 
     private MotherTree motherTreeComponent;
 
@@ -18,13 +19,20 @@ public class UI_MotherTree : MonoBehaviour
         UpdateLifeUI(motherTreeComponent.GetCurrentLife(), motherTreeComponent.GetMaxLife());
     }
 
+    void Update()
+    {
+      
+        if (dayNightCycle != null && hourText != null)
+        {
+            float currentHour = dayNightCycle.GetCurrentHour();
+            hourText.text =  Mathf.Floor(currentHour).ToString("00") + ":" + Mathf.Floor((currentHour % 1) * 60).ToString("00");
+        }
+    }
 
     public void UpdateLifeUI(float currentLife, float maxLife)
     {
-        if (currentLifeText != null && maxLifeText != null && lifeSlider != null)
+        if (lifeSlider != null)
         {
-            currentLifeText.text =  currentLife.ToString();
-            maxLifeText.text =  maxLife.ToString();
             lifeSlider.value = currentLife / maxLife;
         }
     }
